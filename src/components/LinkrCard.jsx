@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import UserPicture from "./UserPicture";
 
-export default function LinkCard(props) {
+export default function LinkCard({ pictureUrl }) {
   return (
     <LinkCardStyle>
-      <span>Picture</span>
-      <div>
+      <UserPicture pictureUrl={pictureUrl} />
+      <div className="link-data">
         <Username>Juvenal Juvêncio</Username>
         <LinkText>
           Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
@@ -25,7 +26,7 @@ const LinkCardStyle = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   gap: 18px;
-  div {
+  .link-data {
     flex-basis: 501px;
   }
 `;
