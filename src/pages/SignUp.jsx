@@ -89,12 +89,12 @@ const SideLeft = styled.div`
 
     h1{
         font-size: 106px;
-        font-family: Passion One;
+        font-family: 'Passion One', cursive;
         line-height: 117px;
     }
 
     h2{
-        font-family: 'Oswald';
+        font-family: 'Oswald', sans-serif;
         font-weight: 700;
         font-size: 43px;
         line-height: 64px;
@@ -116,7 +116,7 @@ const SideRight = styled.div`
         flex-direction: column;
         a{
             color:white;
-            font-family: 'Lato';
+            font-family: 'Lato', sans-serif;
             font-style: normal;
             font-weight: 400;
             font-size: 20px;
