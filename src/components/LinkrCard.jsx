@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import UserPicture from "./UserPicture";
 
-export default function LinkrCard({ pictureUrl }) {
+export default function LinkrCard({ pictureUrl, link }) {
   return (
     <LinkCardStyle>
       <UserPicture pictureUrl={pictureUrl} />
@@ -10,7 +10,7 @@ export default function LinkrCard({ pictureUrl }) {
         <LinkText>
           Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
         </LinkText>
-        <Link></Link>
+        <Link>{link}</Link>
       </div>
     </LinkCardStyle>
   );
