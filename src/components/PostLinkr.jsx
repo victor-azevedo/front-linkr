@@ -22,10 +22,11 @@ export default function PostLinkr({ pictureUrl }) {
     e.preventDefault();
     setIsLoading(true);
     const body = {
-      ...form,
+      linkUrl: form.link,
+      text: form.text,
     };
     axios
-      .post(`http://localhost:4000/post`, body)
+      .post(`http://localhost:4000/linkrs`, body)
       .then((res) => {
         setIsLoading(false);
         setForm({
