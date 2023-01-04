@@ -6,6 +6,7 @@ import Header from "../components/Header.jsx";
 import LinkCard from "../components/LinkrCard";
 import Trending from "../components/Trending";
 import UserPicture from "../components/UserPicture";
+import { BASE_URL } from "../constants/constants.js";
 import { useAuth } from "../hooks/useAuth.jsx";
 
 export default function UserPage(props) {
@@ -16,7 +17,6 @@ export default function UserPage(props) {
     const [cards, setCards] = useState(null);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const BASE_URL = "";
 
     useEffect(() => {
         setLoading(true);
