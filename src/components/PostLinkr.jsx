@@ -1,13 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
+import UserPicture from "./UserPicture";
 import styled from "styled-components";
+import { useNavigate } from "react-router";
 
-export default function PostLinkr(props) {
+export default function PostLinkr({ pictureUrl }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     link: "",
     text: "",
   });
+
+  const navigate = useNavigate();
 
   function handleForm(e) {
     const { name, value } = e.target;
@@ -16,11 +20,29 @@ export default function PostLinkr(props) {
 
   function publishLink(e) {
     e.preventDefault();
+    setIsLoading(true);
+    const body = {
+      ...form,
+    };
+    axios
+      .post(`http://localhost:4000/post`, body)
+      .then((res) => {
+        setIsLoading(false);
+        setForm({
+          link: "",
+          text: "",
+        });
+        // navigate(0);
+      })
+      .catch((err) => {
+        alert("Houve um erro ao publicar seu link");
+        setIsLoading(false);
+      });
   }
   return (
     <PostLinkrStyle>
-      <span>Picture</span>
-      <div>
+      <UserPicture pictureUrl={pictureUrl} />
+      <div className="post-data">
         <p>What are you going to share today?</p>
         <Form onSubmit={publishLink}>
           <InputLink
@@ -41,7 +63,7 @@ export default function PostLinkr(props) {
             disabled={isLoading}
           ></InputText>
           <button className="btn" type="submit" disabled={isLoading}>
-            Publish
+            {isLoading ? "Publishing..." : "Publish"}
           </button>
         </Form>
       </div>
@@ -61,7 +83,7 @@ const PostLinkrStyle = styled.div`
   align-items: flex-start;
   gap: 18px;
   margin-bottom: 15px;
-  div {
+  .post-data {
     flex-basis: 501px;
   }
   p {
