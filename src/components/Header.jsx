@@ -15,6 +15,7 @@ const HeaderStyle = styled.div`
   background-color: #151515;
   color: #fff;
   padding: 0 28px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
