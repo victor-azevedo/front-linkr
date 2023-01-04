@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import UserPicture from "./UserPicture";
 
-export default function LinkCard({ pictureUrl }) {
+export default function LinkrCard({ pictureUrl }) {
   return (
     <LinkCardStyle>
       <UserPicture pictureUrl={pictureUrl} />
