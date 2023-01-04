@@ -60,6 +60,7 @@ const PostLinkrStyle = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   gap: 18px;
+  margin-bottom: 15px;
   div {
     flex-basis: 501px;
   }
