@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import UserPicture from "./UserPicture";
 
-export default function Header(props) {
+export default function Header({ pictureUrl }) {
   return (
     <HeaderStyle>
       <Logo>linkr</Logo>
-      <div>Picture</div>
+      <UserPicture pictureUrl={pictureUrl} />
     </HeaderStyle>
   );
 }
@@ -24,5 +25,3 @@ const Logo = styled.div`
   font-family: "Passion One", cursive;
   font-size: 49px;
 `;
-
-
