@@ -1,8 +1,46 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 
 export default function SignUp(props) {
+    const URL = "http://localhost:4000/signup"
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [username, setUserName] = useState('')
+    const [pictureUrl, setPictureUrl] = useState('')
+
+    const body = {
+        email,
+        password,
+        username,
+        pictureUrl
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        setIsLoading(true);
+
+        const promise = axios.post(URL, body);
+
+        promise.then(() => {
+            navigate("/");
+            setIsLoading(false);
+        });
+        promise.catch((erro) => {
+            console.log(erro.response.data)
+            if (erro.response.status === 409) {
+                alert("Esse email já está cadastrado!");
+            }
+            setIsLoading(false);
+        });
+    }
+
     return (
         <>
             <Container>
@@ -13,49 +51,46 @@ export default function SignUp(props) {
                 </SideLeft>
 
                 <SideRight>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
-                            id="email"
+                            onChange={e => setEmail(e.target.value)}
+                            value={email}
+                            disabled={isLoading}
                             placeholder="e-mail"
                             name='email' type='email'
                             required>
                         </input>
 
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
-                            id="password"
+                            onChange={e => setPassword(e.target.value)}
+                            value={password}
+                            disabled={isLoading}
                             placeholder="password"
                             name='password' type='password'
                             required>
                         </input>
 
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
-                            id="username"
+                            onChange={e => setUserName(e.target.value)}
+                            value={username}
+                            disabled={isLoading}
                             placeholder="username"
                             name='username' type='text'
                             required>
                         </input>
 
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
-                            id="picture"
+                            onChange={e => setPictureUrl(e.target.value)}
+                            value={pictureUrl}
+                            disabled={isLoading}
                             placeholder="picture url"
                             name='picture' type='text'
                             required>
                         </input>
 
                         <button
-                            type='submit'> Sign Up </button>
+                            type='submit'
+                            disabled={isLoading} > Sign Up </button>
                         <Link to="/">
                             <a>Switch back to log in</a>
                         </Link>
