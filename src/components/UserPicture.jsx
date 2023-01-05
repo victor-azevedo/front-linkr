@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function UserPicture({ pictureUrl }) {
+export default function UserPicture({ userPictureUrl }) {
   return (
     <UserPictureStyle>
-      <img src={pictureUrl} alt="user avatar" />
+      <img src={userPictureUrl} alt="user avatar" />
     </UserPictureStyle>
   );
 }
