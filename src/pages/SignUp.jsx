@@ -26,16 +26,18 @@ export default function SignUp(props) {
 
         setIsLoading(true);
 
-        const promise = axios.post(URL, body)
+        const promise = axios.post(URL, body);
 
         promise.then(() => {
-            setIsLoading(false);
             navigate("/");
+            setIsLoading(false);
         });
         promise.catch((erro) => {
-            console.log(erro)
+            console.log(erro.response.data)
+            if (erro.response.status === 409) {
+                alert("Esse email já está cadastrado!");
+            }
             setIsLoading(false);
-
         });
     }
 
@@ -54,7 +56,6 @@ export default function SignUp(props) {
                             onChange={e => setEmail(e.target.value)}
                             value={email}
                             disabled={isLoading}
-                            id="email"
                             placeholder="e-mail"
                             name='email' type='email'
                             required>
@@ -64,7 +65,6 @@ export default function SignUp(props) {
                             onChange={e => setPassword(e.target.value)}
                             value={password}
                             disabled={isLoading}
-                            id="password"
                             placeholder="password"
                             name='password' type='password'
                             required>
@@ -74,7 +74,6 @@ export default function SignUp(props) {
                             onChange={e => setUserName(e.target.value)}
                             value={username}
                             disabled={isLoading}
-                            id="username"
                             placeholder="username"
                             name='username' type='text'
                             required>
@@ -84,14 +83,14 @@ export default function SignUp(props) {
                             onChange={e => setPictureUrl(e.target.value)}
                             value={pictureUrl}
                             disabled={isLoading}
-                            id="picture"
                             placeholder="picture url"
                             name='picture' type='text'
                             required>
                         </input>
 
                         <button
-                            type='submit'> Sign Up </button>
+                            type='submit'
+                            disabled={isLoading} > Sign Up </button>
                         <Link to="/">
                             <a>Switch back to log in</a>
                         </Link>
