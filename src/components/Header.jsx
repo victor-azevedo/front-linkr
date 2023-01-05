@@ -67,7 +67,7 @@ export default function Header({ userPictureUrl }) {
           </div>
         </div>
       </SearchBar>
-      <UserPicture pictureUrl={userPictureUrl} />
+      <UserPicture userPictureUrl={userPictureUrl} />
     </HeaderStyle>
   );
 }
