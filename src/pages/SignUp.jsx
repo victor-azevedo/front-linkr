@@ -1,8 +1,44 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 
 export default function SignUp(props) {
+    const URL = "http://localhost:4000/signup"
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [username, setUserName] = useState('')
+    const [pictureUrl, setPictureUrl] = useState('')
+
+    const body = {
+        email,
+        password,
+        username,
+        pictureUrl
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        setIsLoading(true);
+
+        const promise = axios.post(URL, body)
+
+        promise.then(() => {
+            setIsLoading(false);
+            navigate("/");
+        });
+        promise.catch((erro) => {
+            console.log(erro)
+            setIsLoading(false);
+
+        });
+    }
+
     return (
         <>
             <Container>
@@ -13,11 +49,11 @@ export default function SignUp(props) {
                 </SideLeft>
 
                 <SideRight>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
+                            onChange={e => setEmail(e.target.value)}
+                            value={email}
+                            disabled={isLoading}
                             id="email"
                             placeholder="e-mail"
                             name='email' type='email'
@@ -25,9 +61,9 @@ export default function SignUp(props) {
                         </input>
 
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
+                            onChange={e => setPassword(e.target.value)}
+                            value={password}
+                            disabled={isLoading}
                             id="password"
                             placeholder="password"
                             name='password' type='password'
@@ -35,9 +71,9 @@ export default function SignUp(props) {
                         </input>
 
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
+                            onChange={e => setUserName(e.target.value)}
+                            value={username}
+                            disabled={isLoading}
                             id="username"
                             placeholder="username"
                             name='username' type='text'
@@ -45,9 +81,9 @@ export default function SignUp(props) {
                         </input>
 
                         <input
-                            //onChange={e => setName(e.target.value)}
-                            //value={name}
-                            //disabled={isLoading}
+                            onChange={e => setPictureUrl(e.target.value)}
+                            value={pictureUrl}
+                            disabled={isLoading}
                             id="picture"
                             placeholder="picture url"
                             name='picture' type='text'
