@@ -1,14 +1,34 @@
 import styled from "styled-components";
 import UserPicture from "./UserPicture";
 import { DebounceInput } from "react-debounce-input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "../assets/SearchIcon.svg";
 import Suggestion from "./Suggestion";
+import axios from "axios";
+import { BASE_URL } from "../constants/constants";
+import { useAuth } from "../hooks/useAuth.jsx";
 
 export default function Header({ pictureUrl }) {
     const [userQuery, setUserQuery] = useState("");
+    const [suggestions, setSuggestions] = useState(null);
+    const [auth] = useAuth();
 
-    //TODO Request userQuery to API
+    useEffect(() => {
+        axios
+            .get(`${BASE_URL}/users/query`, {
+                headers: {
+                    Authorization: `Bearer ${
+                        {
+                            /*auth.token*/
+                        }
+                    }`,
+                },
+            })
+            .then(({ data: apiSuggestions }) => {
+                setSuggestions(apiSuggestions);
+            })
+            .catch((err) => console.log(err));
+    }, [userQuery]);
 
     return (
         <HeaderStyle>
@@ -28,15 +48,18 @@ export default function Header({ pictureUrl }) {
                         </div>
                     </div>
                     <div className="suggestions">
-                        
-                        <Suggestion
+                        {suggestions &&
+                            suggestions.length !== 0 &&
+                            suggestions.map((suggestion) => (
+                                <Suggestion
+                                    profileUrl={suggestion.profileUrl}
+                                    username={suggestion.username}
+                                />
+                            ))}
+                        {/* <Suggestion
                             profileUrl={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
                             username={"teste"}
-                        />
-                        <Suggestion
-                            profileUrl={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
-                            username={"teste"}
-                        />
+                        /> */}
                     </div>
                 </div>
             </SearchBar>
@@ -66,9 +89,9 @@ const SearchBar = styled.div`
     height: 45px;
     background-color: #e7e7e7;
     border-radius: 8px;
-    .growing-content-box{
-      background-color: #e7e7e7;
-      border-radius: 8px;
+    .growing-content-box {
+        background-color: #e7e7e7;
+        border-radius: 8px;
     }
     .main-search {
         display: flex;
