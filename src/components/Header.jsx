@@ -15,7 +15,7 @@ export default function Header({ pictureUrl }) {
 
     useEffect(() => {
         axios
-            .get(`${BASE_URL}/users/query`, {
+            .post(`${BASE_URL}/users/query`, {userQuery}, {
                 headers: {
                     Authorization: `Bearer ${
                         {

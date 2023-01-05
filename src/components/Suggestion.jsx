@@ -1,12 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { BASE_URL } from "../constants/constants";
 
 
-export default function Suggestion({profileUrl, username}){
+export default function Suggestion({profileUrl, username, id}){
 
-    
+    const navigate = useNavigate()
 
     return (
-        <StyledSuggestion>
+        <StyledSuggestion onClick={e => navigate(`${BASE_URL}/user/${id}`)}>
             <img src={profileUrl} alt="user-suggestion-picture" />
             <p>{username}</p>
         </StyledSuggestion>
