@@ -1,29 +1,27 @@
 import styled from "styled-components";
 import UserPicture from "./UserPicture";
 
-export default function LinkrCard({ pictureUrl, link }) {
+export default function LinkrCard({
+  username,
+  userPictureUrl,
+  link,
+  text,
+  linkMetadata,
+}) {
   return (
     <LinkCardStyle>
-      <UserPicture pictureUrl={pictureUrl} />
+      <UserPicture userPictureUrl={userPictureUrl} />
       <div className="link-data">
-        <Username>Juvenal Juvêncio</Username>
-        <Text>
-          Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
-        </Text>
-        <Link>
+        <Username>{username}</Username>
+        <Text>{text}</Text>
+        <Link href={link} target="blank">
           <LinkTexts>
-            <LinkTitle>
-              Como aplicar o Material UI em um projeto React
-            </LinkTitle>
-            <LinkDescription>
-              Hey! I have moved this tutorial to my personal blog. Same content,
-              new location. Sorry about making you click through to another
-              page.
-            </LinkDescription>
+            <LinkTitle>{linkMetadata.title}</LinkTitle>
+            <LinkDescription>{linkMetadata.description}</LinkDescription>
             <LinkUrl>{link}</LinkUrl>
           </LinkTexts>
           <LinkImage>
-            <img src={pictureUrl} alt="" />
+            <img src={linkMetadata.image} alt="" />
           </LinkImage>
         </Link>
       </div>
@@ -61,12 +59,14 @@ const Text = styled.p`
   margin-top: 10px;
 `;
 
-const Link = styled.div`
+const Link = styled.a`
+  color: #cecece;
   display: flex;
   align-items: stretch;
   border: 1px solid #4d4d4d;
   border-radius: 11px;
   margin-top: 10px;
+  text-decoration: none;
 `;
 
 const LinkTexts = styled.div`
