@@ -1,15 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
 
-import { BASE_URL, LINK_TEST, PICTURE_USER } from "../constants/constants";
+import { BASE_URL, PICTURE_USER } from "../constants/constants";
 
 export default function Timeline(props) {
-  // const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [linksList, setLinksList] = useState([]);
   useEffect(() => {
@@ -51,11 +49,11 @@ export default function Timeline(props) {
 
   return (
     <Page>
-      <Header pictureUrl={PICTURE_USER} />
+      <Header userPictureUrl={PICTURE_USER} />
       <TimelineStyle>
         <h2>timeline</h2>
         <Cards>
-          <PostLinkr pictureUrl={PICTURE_USER} />
+          <PostLinkr userPictureUrl={PICTURE_USER} />
           {renderLinks()}
           {isLoading ? <Loading>Loading...</Loading> : null}
         </Cards>

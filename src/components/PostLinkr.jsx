@@ -4,7 +4,7 @@ import UserPicture from "./UserPicture";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 
-export default function PostLinkr({ pictureUrl }) {
+export default function PostLinkr({ userPictureUrl }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     link: "",
@@ -33,7 +33,7 @@ export default function PostLinkr({ pictureUrl }) {
           link: "",
           text: "",
         });
-        // navigate(0);
+        navigate(0);
       })
       .catch((err) => {
         alert("Houve um erro ao publicar seu link");
@@ -42,7 +42,7 @@ export default function PostLinkr({ pictureUrl }) {
   }
   return (
     <PostLinkrStyle>
-      <UserPicture pictureUrl={pictureUrl} />
+      <UserPicture userPictureUrl={userPictureUrl} />
       <div className="post-data">
         <p>What are you going to share today?</p>
         <Form onSubmit={publishLink}>
