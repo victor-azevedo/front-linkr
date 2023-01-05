@@ -1,16 +1,57 @@
 import styled from "styled-components";
 import UserPicture from "./UserPicture";
+import { ReactComponent as UnlikeIcon } from "../assets/HeartIcon.svg";
+import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
+import { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../constants/constants";
 
 export default function LinkrCard({
+  id,
   username,
   userPictureUrl,
   link,
   text,
   linkMetadata,
+  linkIsliked,
 }) {
+  const [isliked, setIsliked] = useState(linkIsliked || false);
+
+  function LikeLink() {
+    if (!isliked) {
+      axios
+        // .post(`${BASE_URL}/like/${id}`, userData.requestConfig)
+        .post(`${BASE_URL}/like/${id}`)
+        .then((res) => {
+          setIsliked(!isliked);
+        })
+        .catch((err) => {
+          alert("An error occurred while trying to like post");
+        });
+    } else {
+      axios
+        // .delete(`${BASE_URL}/like/${id}`, userData.requestConfig)
+        .delete(`${BASE_URL}/like/${id}`)
+        .then((res) => {
+          setIsliked(!isliked);
+        })
+        .catch((err) => {
+          alert("An error occurred while trying to like post");
+        });
+    }
+  }
+
   return (
     <LinkCardStyle>
-      <UserPicture userPictureUrl={userPictureUrl} />
+      <div className="user-data">
+        <UserPicture userPictureUrl={userPictureUrl} />
+        {isliked ? (
+          <StyledLikedIcon onClick={LikeLink} />
+        ) : (
+          <StyledUnlikeIcon onClick={LikeLink} />
+        )}
+        <LikeCount>12 likes</LikeCount>
+      </div>
       <div className="link-data">
         <Username>{username}</Username>
         <Text>{text}</Text>
@@ -49,6 +90,40 @@ const Username = styled.p`
   font-size: 19px;
   line-height: 23px;
   font-weight: 400;
+`;
+
+const StyledUnlikeIcon = styled(UnlikeIcon)`
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  path {
+    fill: #fff;
+    stroke-width: 48;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledLikedIcon = styled(LikedIcon)`
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  path {
+    stroke-width: 48;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const LikeCount = styled.p`
+  color: #fff;
+  font-size: 11px;
+  line-height: 13.2px;
+  font-weight: 400;
+  margin-top: 8px;
+  text-align: center;
 `;
 
 const Text = styled.p`
