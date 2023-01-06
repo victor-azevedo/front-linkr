@@ -52,11 +52,11 @@ export default function Timeline(props) {
 
   return (
     <Page>
-      <Header pictureUrl={PICTURE_USER} />
+      <Header userPictureUrl={PICTURE_USER} />
       <TimelineStyle>
         <h2>timeline</h2>
         <Cards>
-          <PostLinkr pictureUrl={PICTURE_USER} />
+          <PostLinkr userPictureUrl={PICTURE_USER} />
           {renderLinks()}
           {isLoading ? <Loading>Loading...</Loading> : null}
         </Cards>
