@@ -5,9 +5,21 @@ import RemoveIcon from "../assets/RemoveIcon.svg";
 import EditIcon from "../assets/EditIcon.svg";
 import { useState } from "react";
 import axios from "axios";
+import { ReactComponent as UnlikeIcon } from "../assets/HeartIcon.svg";
+import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
+import { BASE_URL } from "../constants/constants";
 
-export default function LinkrCard({ id, username, userPictureUrl, link, text, linkMetadata }) {
-    const [auth] = useAuth();
+export default function LinkrCard({
+  id,
+  username,
+  userPictureUrl,
+  link,
+  text,
+  linkMetadata,
+  linkIsliked,
+}) {
+  const [isliked, setIsliked] = useState(linkIsliked || false);
+  const [auth] = useAuth();
     const [modalConfirmation, setModalConfirmation] = useState(false);
 
     function handleCardRemoval(e) {
@@ -18,11 +30,43 @@ export default function LinkrCard({ id, username, userPictureUrl, link, text, li
             .catch((error) => alert("Error in removal"));
     }
 
-    return (
-        <LinkCardStyle>
-            <UserPicture userPictureUrl={userPictureUrl} />
-            <div className="link-data">
-                {
+  function LikeLink() {
+    if (!isliked) {
+      axios
+        // .post(`${BASE_URL}/like/${id}`, userData.requestConfig)
+        .post(`${BASE_URL}/like/${id}`)
+        .then((res) => {
+          setIsliked(!isliked);
+        })
+        .catch((err) => {
+          alert("An error occurred while trying to like post");
+        });
+    } else {
+      axios
+        // .delete(`${BASE_URL}/like/${id}`, userData.requestConfig)
+        .delete(`${BASE_URL}/like/${id}`)
+        .then((res) => {
+          setIsliked(!isliked);
+        })
+        .catch((err) => {
+          alert("An error occurred while trying to like post");
+        });
+    }
+  }
+
+  return (
+    <LinkCardStyle>
+      <div className="user-data">
+        <UserPicture userPictureUrl={userPictureUrl} />
+        {isliked ? (
+          <StyledLikedIcon onClick={LikeLink} />
+        ) : (
+          <StyledUnlikeIcon onClick={LikeLink} />
+        )}
+        <LikeCount>12 likes</LikeCount>
+      </div>
+      <div className="link-data">
+      {
                     /*auth?.username*/ "didi" === username && (
                         <EditionAndDeletion>
                             <img src={EditIcon} alt="edit linkr icon" onClick={(e) => {}} />
@@ -34,20 +78,20 @@ export default function LinkrCard({ id, username, userPictureUrl, link, text, li
                         </EditionAndDeletion>
                     )
                 }
-                <Username>{username}</Username>
-                <Text>{text}</Text>
-                <Link href={link} target="blank">
-                    <LinkTexts>
-                        <LinkTitle>{linkMetadata.title}</LinkTitle>
-                        <LinkDescription>{linkMetadata.description}</LinkDescription>
-                        <LinkUrl>{link}</LinkUrl>
-                    </LinkTexts>
-                    <LinkImage>
-                        <img src={linkMetadata.image} alt="" />
-                    </LinkImage>
-                </Link>
-            </div>
-            {modalConfirmation && (
+        <Username>{username}</Username>
+        <Text>{text}</Text>
+        <Link href={link} target="blank">
+          <LinkTexts>
+            <LinkTitle>{linkMetadata.title}</LinkTitle>
+            <LinkDescription>{linkMetadata.description}</LinkDescription>
+            <LinkUrl>{link}</LinkUrl>
+          </LinkTexts>
+          <LinkImage>
+            <img src={linkMetadata.image} alt="" />
+          </LinkImage>
+        </Link>
+      </div>
+      {modalConfirmation && (
                 <ModalConfirmationScreen>
                     <div className="confirmation-box">
                         <h2>Are you sure you want to delete this post?</h2>
@@ -65,8 +109,8 @@ export default function LinkrCard({ id, username, userPictureUrl, link, text, li
                     </div>
                 </ModalConfirmationScreen>
             )}
-        </LinkCardStyle>
-    );
+    </LinkCardStyle>
+  );
 }
 
 const LinkCardStyle = styled.div`
@@ -90,6 +134,40 @@ const Username = styled.p`
     font-size: 19px;
     line-height: 23px;
     font-weight: 400;
+`;
+
+const StyledUnlikeIcon = styled(UnlikeIcon)`
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  path {
+    fill: #fff;
+    stroke-width: 48;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledLikedIcon = styled(LikedIcon)`
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  path {
+    stroke-width: 48;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const LikeCount = styled.p`
+  color: #fff;
+  font-size: 11px;
+  line-height: 13.2px;
+  font-weight: 400;
+  margin-top: 8px;
+  text-align: center;
 `;
 
 const Text = styled.p`
