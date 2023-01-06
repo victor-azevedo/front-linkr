@@ -44,7 +44,7 @@ export default function Timeline(props) {
             link={link.linkUrl}
             text={link.text}
             linkMetadata={link.linkMetadata}
-            linkIsliked={false}
+            linkIsliked={link.likerId}
           />
         );
       });
