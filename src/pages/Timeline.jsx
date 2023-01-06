@@ -1,17 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
 
-import { BASE_URL, LINK_TEST, PICTURE_USER } from "../constants/constants";
+import { BASE_URL, PICTURE_USER } from "../constants/constants";
 
 export default function Timeline(props) {
-  // const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [linksList, setLinksList] = useState([]);
+
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -24,7 +23,7 @@ export default function Timeline(props) {
       })
       .catch((err) => {
         alert(
-          "An error occured while trying to fetch the posts, please refresh the page"
+          "An error occurred while trying to fetch the posts, please refresh the page"
         );
         setIsLoading(false);
       });
@@ -44,7 +43,7 @@ export default function Timeline(props) {
             link={link.linkUrl}
             text={link.text}
             linkMetadata={link.linkMetadata}
-            linkIsliked={link.likerId}
+            likes={link.likes}
           />
         );
       });
