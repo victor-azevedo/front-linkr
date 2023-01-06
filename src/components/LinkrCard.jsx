@@ -25,7 +25,7 @@ export default function LinkrCard({
   function handleCardRemoval(e) {
     e.preventDefault();
     axios
-      .delete(`/linkr/${id}`, {
+      .delete(`/linkr/delete/${id}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
       })
       .then((res) => alert("Success"))
