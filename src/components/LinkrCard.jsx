@@ -17,8 +17,10 @@ export default function LinkrCard({
     text,
     linkMetadata,
     linkIsliked,
+    likes,
 }) {
-    const [isliked, setIsliked] = useState(linkIsliked || false);
+    const [isLiked, setIsLiked] = useState(likes.linkIsLikedByUser);
+    const [likesCount, setLikesCount] = useState(likes.count);
     const [auth] = useAuth();
     const [modalConfirmation, setModalConfirmation] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
@@ -90,39 +92,41 @@ export default function LinkrCard({
     }, [isTextEditable]);
 
     function LikeLink() {
-        if (!isliked) {
-            axios
-                // .post(`${BASE_URL}/like/${id}`, userData.requestConfig)
-                .post(`${BASE_URL}/linkrs/like/${id}`)
-                .then((res) => {
-                    setIsliked(true);
-                })
-                .catch((err) => {
-                    alert("An error occurred while trying to like post");
-                });
-        } else {
-            axios
-                // .delete(`${BASE_URL}/like/${id}`, userData.requestConfig)
-                .delete(`${BASE_URL}/linkrs/like/${id}`)
-                .then((res) => {
-                    setIsliked(false);
-                })
-                .catch((err) => {
-                    alert("An error occurred while trying to like post");
-                });
-        }
+      if (!isLiked) {
+        axios
+          // .post(`${BASE_URL}/like/${id}`, userData.requestConfig)
+          .post(`${BASE_URL}/linkrs/like/${id}`)
+          .then((res) => {
+            setIsLiked(!isLiked);
+            setLikesCount(likesCount + 1);
+          })
+          .catch((err) => {
+            alert("An error occurred while trying to like post");
+          });
+      } else {
+        axios
+          // .delete(`${BASE_URL}/like/${id}`, userData.requestConfig)
+          .delete(`${BASE_URL}/linkrs/like/${id}`)
+          .then((res) => {
+            setIsLiked(!isLiked);
+            setLikesCount(likesCount - 1);
+          })
+          .catch((err) => {
+            alert("An error occurred while trying to like post");
+          });
+      }
     }
 
     return (
         <LinkCardStyle>
             <div className="user-data">
                 <UserPicture userPictureUrl={userPictureUrl} />
-                {isliked ? (
+                {isLiked ? (
                     <StyledLikedIcon onClick={LikeLink} />
                 ) : (
                     <StyledUnlikeIcon onClick={LikeLink} />
                 )}
-                <LikeCount>12 likes</LikeCount>
+                <LikeCount>{likesCount} likes</LikeCount>
             </div>
             <div className="link-data">
                 {auth?.username === username && (
