@@ -16,7 +16,6 @@ export default function LinkrCard({
     link,
     text,
     linkMetadata,
-    linkIsliked,
     likes,
 }) {
     const [isLiked, setIsLiked] = useState(likes.linkIsLikedByUser);
@@ -92,29 +91,29 @@ export default function LinkrCard({
     }, [isTextEditable]);
 
     function LikeLink() {
-      if (!isLiked) {
-        axios
-          // .post(`${BASE_URL}/like/${id}`, userData.requestConfig)
-          .post(`${BASE_URL}/linkrs/like/${id}`)
-          .then((res) => {
-            setIsLiked(!isLiked);
-            setLikesCount(likesCount + 1);
-          })
-          .catch((err) => {
-            alert("An error occurred while trying to like post");
-          });
-      } else {
-        axios
-          // .delete(`${BASE_URL}/like/${id}`, userData.requestConfig)
-          .delete(`${BASE_URL}/linkrs/like/${id}`)
-          .then((res) => {
-            setIsLiked(!isLiked);
-            setLikesCount(likesCount - 1);
-          })
-          .catch((err) => {
-            alert("An error occurred while trying to like post");
-          });
-      }
+        if (!isLiked) {
+            axios
+                // .post(`${BASE_URL}/like/${id}`, userData.requestConfig)
+                .post(`${BASE_URL}/linkrs/like/${id}`)
+                .then((res) => {
+                    setIsLiked(!isLiked);
+                    setLikesCount(likesCount + 1);
+                })
+                .catch((err) => {
+                    alert("An error occurred while trying to like post");
+                });
+        } else {
+            axios
+                // .delete(`${BASE_URL}/like/${id}`, userData.requestConfig)
+                .delete(`${BASE_URL}/linkrs/like/${id}`)
+                .then((res) => {
+                    setIsLiked(!isLiked);
+                    setLikesCount(likesCount - 1);
+                })
+                .catch((err) => {
+                    alert("An error occurred while trying to like post");
+                });
+        }
     }
 
     return (
