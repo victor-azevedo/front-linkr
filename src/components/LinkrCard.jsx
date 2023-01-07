@@ -3,7 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import UserPicture from "./UserPicture";
 import RemoveIcon from "../assets/RemoveIcon.svg";
 import EditIcon from "../assets/EditIcon.svg";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { ReactComponent as UnlikeIcon } from "../assets/HeartIcon.svg";
 import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
@@ -22,6 +22,12 @@ export default function LinkrCard({
     const [auth] = useAuth();
     const [modalConfirmation, setModalConfirmation] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
+
+    const [isTextEditable, setIsTextEditable] = useState(false);
+    const [editTextInput, setEditTextInput] = useState(text);
+    const [loadingEdition, setLoadingEdition] = useState(false);
+    const [editAPIAccepted, setEditAPIAccepted] = useState(false);
+    const inputRef = useRef(null);
 
     function handleCardRemoval(e) {
         e.preventDefault();
@@ -42,6 +48,46 @@ export default function LinkrCard({
                 alert("Error in removal");
             });
     }
+
+    function handleKeyEvent(e) {
+        if (e.keyCode === 27) {
+            //ESC Key
+            setIsTextEditable(false);
+        }
+        if (e.keyCode === 13) {
+            //ENTER Key
+            if (editTextInput === text) {
+                setIsTextEditable(false);
+                return;
+            }
+            setLoadingEdition(true);
+            axios
+                .put(
+                    `${BASE_URL}/linkrs/edit/${id}`,
+                    { updatedText: editTextInput },
+                    { headers: { Authorization: `Bearer ${auth?.token}` } }
+                )
+                .then((res) => {
+                    text = editTextInput;
+                    setEditAPIAccepted(true);
+                    setLoadingEdition(false);
+                    setIsTextEditable(false);
+                })
+                .catch((err) => {
+                    alert("Couldn't complete request");
+                    setLoadingEdition(false);
+                });
+        }
+    }
+
+    useEffect(() => {
+        const { current } = inputRef;
+        if (isTextEditable) {
+            current.focus();
+        } else {
+            setEditTextInput(editAPIAccepted ? editTextInput : text);
+        }
+    }, [isTextEditable]);
 
     function LikeLink() {
         if (!isliked) {
@@ -79,20 +125,35 @@ export default function LinkrCard({
                 <LikeCount>12 likes</LikeCount>
             </div>
             <div className="link-data">
-                {
-                    /*auth?.username*/ "didi" === username && (
-                        <EditionAndDeletion>
-                            <img src={EditIcon} alt="edit linkr icon" onClick={(e) => {}} />
-                            <img
-                                src={RemoveIcon}
-                                alt="remove linkr icon"
-                                onClick={(e) => setModalConfirmation(true)}
-                            />
-                        </EditionAndDeletion>
-                    )
-                }
+                {auth?.username === username && (
+                    <EditionAndDeletion>
+                        <img
+                            src={EditIcon}
+                            alt="edit linkr icon"
+                            onClick={() => setIsTextEditable(!isTextEditable)}
+                        />
+                        <img
+                            src={RemoveIcon}
+                            alt="remove linkr icon"
+                            onClick={(e) => setModalConfirmation(true)}
+                        />
+                    </EditionAndDeletion>
+                )}
                 <Username>{username}</Username>
-                <Text>{text}</Text>
+                {isTextEditable ? (
+                    <TextEditor
+                        type="text"
+                        onKeyDown={handleKeyEvent}
+                        ref={inputRef}
+                        disabled={loadingEdition}
+                        value={editTextInput}
+                        onChange={(e) => {
+                            setEditTextInput(e.target.value);
+                        }}
+                    />
+                ) : (
+                    <Text>{editTextInput}</Text>
+                )}
                 <Link href={link} target="blank">
                     <LinkTexts>
                         <LinkTitle>{linkMetadata.title}</LinkTitle>
@@ -190,6 +251,9 @@ const Text = styled.p`
     line-height: 20px;
     font-weight: 400;
     margin-top: 10px;
+    word-break: break-all;
+    padding: 5px;
+    border-radius: 7px;
 `;
 
 const Link = styled.a`
@@ -243,6 +307,23 @@ const EditionAndDeletion = styled.div`
     right: 0;
     width: 40px;
     height: 20px;
+`;
+
+const TextEditor = styled.input`
+    width: 100%;
+    font-size: 17px;
+    line-height: 20px;
+    font-weight: 400;
+    margin-top: 10px;
+    word-break: break-all;
+    padding: 5px;
+    border-radius: 7px;
+    color: #4c4c4c;
+    font-family: "Lato", sans-serif;
+    border: 0;
+    &:focus {
+        outline: 0;
+    }
 `;
 
 const ModalConfirmationScreen = styled.div`
