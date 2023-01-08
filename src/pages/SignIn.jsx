@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { decodeToken } from "react-jwt";
 
 import axios from "axios";
 import styled from "styled-components";
 
 import { BASE_URL } from "../constants/constants";
+import { useUserData } from "../hooks/useUserData";
 
 export default function SignIn(props) {
   const navigate = useNavigate();
@@ -13,6 +15,8 @@ export default function SignIn(props) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { setUserData } = useUserData();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,8 +31,10 @@ export default function SignIn(props) {
     const promise = axios.post(`${BASE_URL}/signin`, body);
 
     promise.then((res) => {
-      console.log(res.data);
       window.localStorage.setItem("token", JSON.stringify(res.data));
+
+      setUserData(decodeToken(res.data.token));
+
       setIsLoading(false);
       navigate("/timeline");
     });
