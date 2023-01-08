@@ -17,7 +17,6 @@ export default function Timeline(props) {
       // .get(`${BASE_URL}/linkrs`, userData.requestConfig)
       .get(`${BASE_URL}/linkrs`)
       .then((res) => {
-        console.log([...res.data]);
         setLinksList([...res.data]);
         setIsLoading(false);
       })
