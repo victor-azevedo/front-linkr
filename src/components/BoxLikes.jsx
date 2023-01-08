@@ -12,12 +12,10 @@ import { Tooltip } from "react-tooltip";
 import "../../node_modules/react-tooltip/dist/react-tooltip.css";
 
 export default function BoxLikes({ id, likes }) {
-  const usernameLogged = "xuxa";
+  const usernameLogged = "pele";
   const [isLiked, setIsLiked] = useState(likes.linkIsLikedByUser);
   const [likesCount, setLikesCount] = useState(likes.count);
-  const [likeMessage, setLikeMessage] = useState(
-    likes.usersLiked.find((user) => user !== usernameLogged)
-  );
+  const [likeMessage, setLikeMessage] = useState("");
   const [auth] = useAuth();
 
   useEffect(() => {
@@ -45,7 +43,7 @@ export default function BoxLikes({ id, likes }) {
         );
       }
     }
-  }, [likeMessage, likesCount]);
+  }, [likesCount]);
 
   function LikeLink() {
     if (!isLiked) {
