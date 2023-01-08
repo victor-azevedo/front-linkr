@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import { useAuth } from "../hooks/useAuth";
-import UserPicture from "./UserPicture";
-import RemoveIcon from "../assets/RemoveIcon.svg";
-import EditIcon from "../assets/EditIcon.svg";
 import { useEffect, useRef, useState } from "react";
+
 import axios from "axios";
-import { ReactComponent as UnlikeIcon } from "../assets/HeartIcon.svg";
-import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
+import styled from "styled-components";
+
+import { useAuth } from "../hooks/useAuth";
 import { BASE_URL } from "../constants/constants";
-import { Tooltip } from "react-tooltip";
-import "../../node_modules/react-tooltip/dist/react-tooltip.css";
+
+import EditIcon from "../assets/EditIcon.svg";
+import BoxLikes from "./BoxLikes";
+import RemoveIcon from "../assets/RemoveIcon.svg";
+import UserPicture from "./UserPicture";
 
 export default function LinkrCard({
   id,
@@ -20,12 +20,6 @@ export default function LinkrCard({
   linkMetadata,
   likes,
 }) {
-  const usernameLogged = "victor";
-  const [isLiked, setIsLiked] = useState(likes.linkIsLikedByUser);
-  const [likesCount, setLikesCount] = useState(likes.count);
-  const [likeMessage, setLikeMessage] = useState(
-    likes.usersLiked.find((user) => user !== usernameLogged)
-  );
   const [auth] = useAuth();
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -94,88 +88,13 @@ export default function LinkrCard({
     } else {
       setEditTextInput(editAPIAccepted ? editTextInput : text);
     }
-    if (likesCount === 0) {
-      setLikeMessage(``);
-    } else if (isLiked && likesCount > 0) {
-      const otherUser = likes.usersLiked.find(
-        (user) => user !== usernameLogged
-      );
-      if (likesCount === 1) {
-        setLikeMessage(`Você`);
-      } else if (likesCount === 2) {
-        setLikeMessage(`Você e ${otherUser}`);
-      } else {
-        setLikeMessage(`Você, ${otherUser} e outras ${likesCount - 2}`);
-      }
-    } else if (!isLiked && likesCount > 0) {
-      if (likesCount === 1) {
-        setLikeMessage(`${likes.usersLiked[0]}`);
-      } else {
-        setLikeMessage(
-          `${likes.usersLiked[0]}, ${likes.usersLiked[1]} e outras ${
-            likesCount - 2
-          }`
-        );
-      }
-    }
-  }, [isTextEditable, likeMessage, likesCount]);
-
-  function LikeLink() {
-    if (!isLiked) {
-      axios
-        .post(`${BASE_URL}/linkrs/like/${id}`, {
-          headers: { Authorization: `Bearer ${auth?.token}` },
-        })
-        .then((res) => {
-          // renderLikeMessage();
-          setIsLiked(!isLiked);
-          setLikesCount(likesCount + 1);
-        })
-        .catch((err) => {
-          alert("An error occurred while trying to like post");
-        });
-    } else {
-      axios
-        .delete(`${BASE_URL}/linkrs/like/${id}`, {
-          headers: { Authorization: `Bearer ${auth?.token}` },
-        })
-        .then((res) => {
-          // renderLikeMessage();
-          setIsLiked(!isLiked);
-          setLikesCount(likesCount - 1);
-        })
-        .catch((err) => {
-          alert("An error occurred while trying to dislike post");
-        });
-    }
-  }
-
-  function renderLikeMessage() {}
-
-  console.log(likeMessage);
-  console.log(likesCount);
+  }, [isTextEditable]);
 
   return (
     <LinkCardStyle>
-      <div className="user-data">
-        {renderLikeMessage()}
+      <div>
         <UserPicture userPictureUrl={userPictureUrl} />
-        <div id={`box-like-${id}`}>
-          {isLiked ? (
-            <StyledLikedIcon onClick={LikeLink} />
-          ) : (
-            <StyledUnlikeIcon onClick={LikeLink} />
-          )}
-          <LikeCount>
-            {likesCount} {likesCount > 1 ? "likes" : "like"}
-          </LikeCount>
-        </div>
-        <Tooltip
-          anchorId={`box-like-${id}`}
-          content={likeMessage}
-          place="bottom"
-          variant="light"
-        />
+        <BoxLikes id={id} likes={likes} />
       </div>
       <div className="link-data">
         {auth?.username === username && (
@@ -262,40 +181,6 @@ const Username = styled.p`
   font-size: 19px;
   line-height: 23px;
   font-weight: 400;
-`;
-
-const StyledUnlikeIcon = styled(UnlikeIcon)`
-  display: block;
-  width: 100%;
-  margin-top: 20px;
-  path {
-    fill: #fff;
-    stroke-width: 48;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const StyledLikedIcon = styled(LikedIcon)`
-  display: block;
-  width: 100%;
-  margin-top: 20px;
-  path {
-    stroke-width: 48;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const LikeCount = styled.p`
-  color: #fff;
-  font-size: 11px;
-  line-height: 13.2px;
-  font-weight: 400;
-  margin-top: 8px;
-  text-align: center;
 `;
 
 const Text = styled.p`
