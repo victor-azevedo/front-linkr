@@ -94,44 +94,15 @@ export default function LinkrCard({
     } else {
       setEditTextInput(editAPIAccepted ? editTextInput : text);
     }
-  }, [isTextEditable]);
-
-  function LikeLink() {
-    if (!isLiked) {
-      axios
-        .post(`${BASE_URL}/linkrs/like/${id}`, {
-          headers: { Authorization: `Bearer ${auth?.token}` },
-        })
-        .then((res) => {
-          renderLikeMessage();
-          setIsLiked(!isLiked);
-          setLikesCount(likesCount + 1);
-        })
-        .catch((err) => {
-          alert("An error occurred while trying to like post");
-        });
-    } else {
-      axios
-        .delete(`${BASE_URL}/linkrs/like/${id}`, {
-          headers: { Authorization: `Bearer ${auth?.token}` },
-        })
-        .then((res) => {
-          renderLikeMessage();
-          setIsLiked(!isLiked);
-          setLikesCount(likesCount - 1);
-        })
-        .catch((err) => {
-          alert("An error occurred while trying to dislike post");
-        });
-    }
-  }
-
-  function renderLikeMessage() {
-    if (isLiked && likesCount > 1) {
+    if (likesCount === 0) {
+      setLikeMessage(``);
+    } else if (isLiked && likesCount > 0) {
       const otherUser = likes.usersLiked.find(
         (user) => user !== usernameLogged
       );
-      if (likesCount === 2) {
+      if (likesCount === 1) {
+        setLikeMessage(`Você`);
+      } else if (likesCount === 2) {
         setLikeMessage(`Você e ${otherUser}`);
       } else {
         setLikeMessage(`Você, ${otherUser} e outras ${likesCount - 2}`);
@@ -147,13 +118,49 @@ export default function LinkrCard({
         );
       }
     }
+  }, [isTextEditable, likeMessage, likesCount]);
+
+  function LikeLink() {
+    if (!isLiked) {
+      axios
+        .post(`${BASE_URL}/linkrs/like/${id}`, {
+          headers: { Authorization: `Bearer ${auth?.token}` },
+        })
+        .then((res) => {
+          // renderLikeMessage();
+          setIsLiked(!isLiked);
+          setLikesCount(likesCount + 1);
+        })
+        .catch((err) => {
+          alert("An error occurred while trying to like post");
+        });
+    } else {
+      axios
+        .delete(`${BASE_URL}/linkrs/like/${id}`, {
+          headers: { Authorization: `Bearer ${auth?.token}` },
+        })
+        .then((res) => {
+          // renderLikeMessage();
+          setIsLiked(!isLiked);
+          setLikesCount(likesCount - 1);
+        })
+        .catch((err) => {
+          alert("An error occurred while trying to dislike post");
+        });
+    }
   }
+
+  function renderLikeMessage() {}
+
+  console.log(likeMessage);
+  console.log(likesCount);
 
   return (
     <LinkCardStyle>
       <div className="user-data">
+        {renderLikeMessage()}
         <UserPicture userPictureUrl={userPictureUrl} />
-        <div id={`box-like-${id}`} data-tooltip-content={likeMessage}>
+        <div id={`box-like-${id}`}>
           {isLiked ? (
             <StyledLikedIcon onClick={LikeLink} />
           ) : (
@@ -162,8 +169,13 @@ export default function LinkrCard({
           <LikeCount>
             {likesCount} {likesCount > 1 ? "likes" : "like"}
           </LikeCount>
-          <Tooltip anchorId={`box-like-${id}`} />
         </div>
+        <Tooltip
+          anchorId={`box-like-${id}`}
+          content={likeMessage}
+          place="bottom"
+          variant="light"
+        />
       </div>
       <div className="link-data">
         {auth?.username === username && (
