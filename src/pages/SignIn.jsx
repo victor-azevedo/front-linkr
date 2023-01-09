@@ -31,9 +31,18 @@ export default function SignIn(props) {
     const promise = axios.post(`${BASE_URL}/signin`, body);
 
     promise.then((res) => {
-      window.localStorage.setItem("token", JSON.stringify(res.data));
+      const newUserData = {
+        ...decodeToken(res.data.token),
+        requestConfig: {
+          headers: { Authorization: `Bearer ${res.data.token}` },
+        },
+      };
 
-      setUserData(decodeToken(res.data.token));
+      setUserData({
+        ...newUserData,
+      });
+
+      window.localStorage.setItem("userData", JSON.stringify(newUserData));
 
       setIsLoading(false);
       navigate("/timeline");
@@ -80,7 +89,9 @@ export default function SignIn(props) {
               required
             ></input>
 
-            <button type="submit"> Log in </button>
+            <button type="submit" disabled={isLoading}>
+              Log in
+            </button>
             <Link to="/sign-up">First time? Create an account!</Link>
           </form>
         </SideRight>
