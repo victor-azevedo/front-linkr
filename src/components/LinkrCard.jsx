@@ -36,7 +36,7 @@ export default function LinkrCard({
     e.preventDefault();
     setModalLoading(true);
     axios
-      .delete(`/linkr/delete/${id}`, userData?.requestConfig)
+      .delete(`${BASE_URL}/linkrs/delete/${id}`, userData?.requestConfig)
       .then((res) => {
         setModalConfirmation(false);
         setModalLoading(false);
@@ -44,6 +44,7 @@ export default function LinkrCard({
         alert("Success");
       })
       .catch((error) => {
+        console.log(error);
         setModalConfirmation(false);
         setModalLoading(false);
         alert("Error in removal");
@@ -66,7 +67,7 @@ export default function LinkrCard({
         .put(
           `${BASE_URL}/linkrs/edit/${id}`,
           { updatedText: editTextInput },
-          { headers: { Authorization: `Bearer ${auth?.token}` } }
+          userData.requestConfig 
         )
         .then((res) => {
           text = editTextInput;
@@ -97,7 +98,7 @@ export default function LinkrCard({
         <BoxLikes id={id} likes={likes} />
       </div>
       <div className="link-data">
-        {auth?.username === username && (
+        {userData?.username === username && (
           <EditionAndDeletion>
             <img
               src={EditIcon}
@@ -291,6 +292,7 @@ const ModalConfirmationScreen = styled.div`
       font-weight: 700;
       text-align: center;
       font-family: "Lato", sans-serif;
+      color: white;
     }
     .confirmation-buttons {
       display: flex;
