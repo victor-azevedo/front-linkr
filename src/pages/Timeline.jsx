@@ -7,7 +7,6 @@ import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
 import Trending from "../components/Trending";
 
-import { BASE_URL } from "../constants/constants";
 import { useUserData } from "../hooks/useUserData";
 
 export default function Timeline(props) {
@@ -27,7 +26,7 @@ export default function Timeline(props) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${BASE_URL}/linkrs`, userData?.requestConfig)
+      .get(`${process.env.BASE_URL}/linkrs`, userData?.requestConfig)
       .then((res) => {
         setLinksList(res.data);
         setIsLoading(false);

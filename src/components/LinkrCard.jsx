@@ -4,7 +4,6 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { useAuth } from "../hooks/useAuth";
-import { BASE_URL } from "../constants/constants";
 
 import EditIcon from "../assets/EditIcon.svg";
 import BoxLikes from "./BoxLikes";
@@ -36,7 +35,7 @@ export default function LinkrCard({
     e.preventDefault();
     setModalLoading(true);
     axios
-      .delete(`${BASE_URL}/linkrs/delete/${id}`, userData?.requestConfig)
+      .delete(`${process.env.BASE_URL}/linkrs/delete/${id}`, userData?.requestConfig)
       .then((res) => {
         setModalConfirmation(false);
         setModalLoading(false);
@@ -65,7 +64,7 @@ export default function LinkrCard({
       setLoadingEdition(true);
       axios
         .put(
-          `${BASE_URL}/linkrs/edit/${id}`,
+          `${process.env.BASE_URL}/linkrs/edit/${id}`,
           { updatedText: editTextInput },
           userData.requestConfig 
         )

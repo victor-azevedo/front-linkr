@@ -6,7 +6,6 @@ import Header from "../components/Header.jsx";
 import LinkCard from "../components/LinkrCard";
 import Trending from "../components/Trending";
 import UserPicture from "../components/UserPicture";
-import { BASE_URL } from "../constants/constants.js";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { useUserData } from "../hooks/useUserData.jsx";
 
@@ -24,7 +23,7 @@ export default function UserPage(props) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(BASE_URL + `/user/${userId}`, userData?.requestConfig)
+      .get(process.env.BASE_URL + `/user/${userId}`, userData?.requestConfig)
       .then(({ data }) => {
         setLoading(false);
         setCards(data);

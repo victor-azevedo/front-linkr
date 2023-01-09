@@ -1,5 +1,3 @@
-export const BASE_URL = "http://localhost:4000";
-
 export const LINK_TEST = "https://www.uol.com.br/";
 
 export const PICTURE_USER =

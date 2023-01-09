@@ -6,7 +6,6 @@ import SearchIcon from "../assets/SearchIcon.svg";
 import MenuLogout from "./MenuLogout";
 import Suggestion from "./Suggestion";
 import axios from "axios";
-import { BASE_URL } from "../constants/constants";
 import { useUserData } from "../hooks/useUserData";
 
 import { ReactComponent as OpenMenuIcon } from "../assets/OpenMenuIcon.svg";
@@ -25,7 +24,7 @@ export default function Header(props) {
       return;
     }
     axios
-      .post(`${BASE_URL}/users/query`, { userQuery }, userData?.requestConfig)
+      .post(`${process.env.BASE_URL}/users/query`, { userQuery }, userData?.requestConfig)
       .then(({ data: apiSuggestions }) => {
         setSuggestions(apiSuggestions);
       })

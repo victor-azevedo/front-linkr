@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import { BASE_URL } from "../constants/constants";
 import { ReactComponent as UnlikeIcon } from "../assets/HeartIcon.svg";
 import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
 
@@ -50,7 +49,11 @@ export default function BoxLikes({ id, likes }) {
   function LikeLink() {
     if (!isLiked) {
       axios
-        .post(`${BASE_URL}/linkrs/like/${id}`, {}, userData?.requestConfig)
+        .post(
+          `${process.env.BASE_URL}/linkrs/like/${id}`,
+          {},
+          userData?.requestConfig
+        )
         .then((res) => {
           setIsLiked(!isLiked);
           setLikesCount(likesCount + 1);
@@ -60,7 +63,7 @@ export default function BoxLikes({ id, likes }) {
         });
     } else {
       axios
-        .delete(`${BASE_URL}/linkrs/like/${id}`, userData?.requestConfig)
+        .delete(`${process.env.BASE_URL}/linkrs/like/${id}`, userData?.requestConfig)
         .then((res) => {
           setIsLiked(!isLiked);
           setLikesCount(likesCount - 1);

@@ -6,7 +6,6 @@ import styled from "styled-components";
 
 import UserPicture from "./UserPicture";
 import { useUserData } from "../hooks/useUserData";
-import { BASE_URL } from "../constants/constants";
 
 export default function PostLinkr({ userPictureUrl }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +31,7 @@ export default function PostLinkr({ userPictureUrl }) {
       text: form.text,
     };
     axios
-      .post(`${BASE_URL}/linkrs`, body, userData?.requestConfig)
+      .post(`${process.env.BASE_URL}/linkrs`, body, userData?.requestConfig)
       .then((res) => {
         setIsLoading(false);
         setForm({

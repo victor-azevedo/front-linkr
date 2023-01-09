@@ -5,7 +5,6 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import Trending from "../components/Trending";
-import { BASE_URL } from "../constants/constants";
 import { useUserData } from "../hooks/useUserData";
 
 export default function HashtagPage() {
@@ -57,8 +56,7 @@ export default function HashtagPage() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      // .get(`${BASE_URL}/linkrs`, userData.requestConfig)
-      .get(`${BASE_URL}/hashtag/${hashtag}`)
+      .get(`${process.env.BASE_URL}/hashtag/${hashtag}`)
       .then((res) => {
         setLinkrs([...res.data]);
         console.log("RESPOSTA: ", res.data);
