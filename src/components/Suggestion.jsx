@@ -8,7 +8,7 @@ export default function Suggestion({profileUrl, username, id}){
     const navigate = useNavigate()
 
     return (
-        <StyledSuggestion onClick={e => navigate(`${BASE_URL}/user/${id}`)}>
+        <StyledSuggestion onClick={e => navigate(`/user/${id}`)}>
             <img src={profileUrl} alt="user-suggestion-picture" />
             <p>{username}</p>
         </StyledSuggestion>
@@ -22,6 +22,7 @@ const StyledSuggestion = styled.div`
     align-items: center;
     img{
         width: 39px;
+        height: 39px;
         border-radius: 20px;
     }
     p{

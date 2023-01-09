@@ -9,13 +9,16 @@ import { BASE_URL } from "../constants/constants";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { useUserData } from "../hooks/useUserData";
 
-export default function Header({ userPictureUrl }) {
+export default function Header(props) {
   const [userQuery, setUserQuery] = useState("");
   const [suggestions, setSuggestions] = useState(null);
-  const [auth] = useAuth();
   const { userData } = useUserData();
 
   useEffect(() => {
+    if (userQuery.length === 0){
+      setSuggestions(null);
+      return;
+    }
     axios
       .post(`${BASE_URL}/users/query`, { userQuery }, userData?.requestConfig)
       .then(({ data: apiSuggestions }) => {
@@ -23,7 +26,7 @@ export default function Header({ userPictureUrl }) {
       })
       .catch((err) => console.log(err));
   }, [userQuery]);
-
+  console.log(userQuery, suggestions)
   return (
     <HeaderStyle>
       <Logo>linkr</Logo>
@@ -43,21 +46,18 @@ export default function Header({ userPictureUrl }) {
           </div>
           <div className="suggestions">
             {suggestions &&
-              suggestions.length !== 0 &&
+              userQuery.length !== 0 &&
               suggestions.map((suggestion) => (
                 <Suggestion
-                  profileUrl={suggestion.profileUrl}
+                  profileUrl={suggestion.pictureUrl}
                   username={suggestion.username}
+                  id={suggestion.id}
                 />
               ))}
-            {/* <Suggestion
-                            profileUrl={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
-                            username={"teste"}
-                        /> */}
           </div>
         </div>
       </SearchBar>
-      <UserPicture userPictureUrl={userPictureUrl} />
+      <UserPicture userPictureUrl={userData.pictureUrl} />
     </HeaderStyle>
   );
 }

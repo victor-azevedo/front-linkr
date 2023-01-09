@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
+import Trending from "../components/Trending";
 
 import { BASE_URL } from "../constants/constants";
 import { useUserData } from "../hooks/useUserData";
@@ -77,6 +78,7 @@ const Page = styled.div`
   background-color: #333;
   color: #fff;
   padding-bottom: 150px;
+
 `;
 
 const TimelineStyle = styled.div`
