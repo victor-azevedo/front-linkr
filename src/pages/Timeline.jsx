@@ -75,6 +75,7 @@ export default function Timeline(props) {
 }
 
 const Page = styled.div`
+
     width: 100%;
     min-height: 100vh;
     min-height: 100vh;
@@ -88,6 +89,7 @@ const Page = styled.div`
       margin-top: 235px;
       margin-left: 20px;
     }
+
 `;
 
 const TimelineStyle = styled.div`
