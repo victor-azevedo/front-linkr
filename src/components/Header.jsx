@@ -7,7 +7,6 @@ import MenuLogout from "./MenuLogout";
 import Suggestion from "./Suggestion";
 import axios from "axios";
 import { BASE_URL } from "../constants/constants";
-import { useAuth } from "../hooks/useAuth.jsx";
 import { useUserData } from "../hooks/useUserData";
 
 import { ReactComponent as OpenMenuIcon } from "../assets/OpenMenuIcon.svg";
@@ -67,13 +66,9 @@ export default function Header(props) {
           </div>
         </div>
       </SearchBar>
-      <BoxMenu>
-        {isMenuOpen ? (
-          <StyledCloseMenuIcon onClick={showHideMenu} />
-        ) : (
-          <StyledOpenMenuIcon onClick={showHideMenu} />
-        )}
-        <UserPicture userPictureUrl={userData.pictureUrl} />
+      <BoxMenu onClick={showHideMenu}>
+        {isMenuOpen ? <StyledCloseMenuIcon /> : <StyledOpenMenuIcon />}
+        <UserPicture userPictureUrl={userData?.pictureUrl} />
         {isMenuOpen ? <MenuLogout setIsMenuOpen={setIsMenuOpen} /> : null}
       </BoxMenu>
       {}
@@ -145,6 +140,9 @@ const BoxMenu = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledOpenMenuIcon = styled(OpenMenuIcon)`
