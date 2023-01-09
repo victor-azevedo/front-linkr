@@ -3,19 +3,25 @@ import UserPicture from "./UserPicture";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
 import SearchIcon from "../assets/SearchIcon.svg";
+import MenuLogout from "./MenuLogout";
 import Suggestion from "./Suggestion";
 import axios from "axios";
 import { BASE_URL } from "../constants/constants";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { useUserData } from "../hooks/useUserData";
 
+import { ReactComponent as OpenMenuIcon } from "../assets/OpenMenuIcon.svg";
+import { ReactComponent as CloseMenuIcon } from "../assets/CloseMenuIcon.svg";
+
 export default function Header(props) {
   const [userQuery, setUserQuery] = useState("");
   const [suggestions, setSuggestions] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const { userData } = useUserData();
 
   useEffect(() => {
-    if (userQuery.length === 0){
+    if (userQuery.length === 0) {
       setSuggestions(null);
       return;
     }
@@ -26,7 +32,11 @@ export default function Header(props) {
       })
       .catch((err) => console.log(err));
   }, [userQuery]);
-  console.log(userQuery, suggestions)
+  console.log(userQuery, suggestions);
+
+  function showHideMenu() {
+    setIsMenuOpen(!isMenuOpen);
+  }
   return (
     <HeaderStyle>
       <Logo>linkr</Logo>
@@ -57,7 +67,16 @@ export default function Header(props) {
           </div>
         </div>
       </SearchBar>
-      <UserPicture userPictureUrl={userData.pictureUrl} />
+      <BoxMenu>
+        {isMenuOpen ? (
+          <StyledCloseMenuIcon onClick={showHideMenu} />
+        ) : (
+          <StyledOpenMenuIcon onClick={showHideMenu} />
+        )}
+        <UserPicture userPictureUrl={userData.pictureUrl} />
+        {isMenuOpen ? <MenuLogout setIsMenuOpen={setIsMenuOpen} /> : null}
+      </BoxMenu>
+      {}
     </HeaderStyle>
   );
 }
@@ -71,6 +90,7 @@ const HeaderStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 const Logo = styled.div`
@@ -118,5 +138,23 @@ const SearchBar = styled.div`
     width: 100%;
     background-color: #e7e7e7;
     border-radius: 8px;
+  }
+`;
+
+const BoxMenu = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+const StyledOpenMenuIcon = styled(OpenMenuIcon)`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledCloseMenuIcon = styled(CloseMenuIcon)`
+  &:hover {
+    cursor: pointer;
   }
 `;
