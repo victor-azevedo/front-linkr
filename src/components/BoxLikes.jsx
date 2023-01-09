@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import { useAuth } from "../hooks/useAuth";
 import { BASE_URL } from "../constants/constants";
 import { ReactComponent as UnlikeIcon } from "../assets/HeartIcon.svg";
 import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
@@ -11,12 +10,15 @@ import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
 import { Tooltip } from "react-tooltip";
 import "../../node_modules/react-tooltip/dist/react-tooltip.css";
 
+import { useUserData } from "../hooks/useUserData";
+
 export default function BoxLikes({ id, likes }) {
-  const usernameLogged = "pele";
+  const { userData } = useUserData();
+  const usernameLogged = userData?.username;
+
   const [isLiked, setIsLiked] = useState(likes.linkIsLikedByUser);
   const [likesCount, setLikesCount] = useState(likes.count);
   const [likeMessage, setLikeMessage] = useState("");
-  const [auth] = useAuth();
 
   useEffect(() => {
     if (likesCount === 0) {
@@ -43,14 +45,12 @@ export default function BoxLikes({ id, likes }) {
         );
       }
     }
-  }, [likesCount]);
+  }, [likesCount, likeMessage]);
 
   function LikeLink() {
     if (!isLiked) {
       axios
-        .post(`${BASE_URL}/linkrs/like/${id}`, {
-          headers: { Authorization: `Bearer ${auth?.token}` },
-        })
+        .post(`${BASE_URL}/linkrs/like/${id}`, {}, userData?.requestConfig)
         .then((res) => {
           setIsLiked(!isLiked);
           setLikesCount(likesCount + 1);
@@ -60,9 +60,7 @@ export default function BoxLikes({ id, likes }) {
         });
     } else {
       axios
-        .delete(`${BASE_URL}/linkrs/like/${id}`, {
-          headers: { Authorization: `Bearer ${auth?.token}` },
-        })
+        .delete(`${BASE_URL}/linkrs/like/${id}`, userData?.requestConfig)
         .then((res) => {
           setIsLiked(!isLiked);
           setLikesCount(likesCount - 1);

@@ -7,27 +7,17 @@ import Suggestion from "./Suggestion";
 import axios from "axios";
 import { BASE_URL } from "../constants/constants";
 import { useAuth } from "../hooks/useAuth.jsx";
+import { useUserData } from "../hooks/useUserData";
 
 export default function Header({ userPictureUrl }) {
   const [userQuery, setUserQuery] = useState("");
   const [suggestions, setSuggestions] = useState(null);
   const [auth] = useAuth();
+  const { userData } = useUserData();
 
   useEffect(() => {
     axios
-      .post(
-        `${BASE_URL}/users/query`,
-        { userQuery },
-        {
-          headers: {
-            Authorization: `Bearer ${
-              {
-                /*auth.token*/
-              }
-            }`,
-          },
-        }
-      )
+      .post(`${BASE_URL}/users/query`, { userQuery }, userData?.requestConfig)
       .then(({ data: apiSuggestions }) => {
         setSuggestions(apiSuggestions);
       })

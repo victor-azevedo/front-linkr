@@ -10,6 +10,7 @@ import EditIcon from "../assets/EditIcon.svg";
 import BoxLikes from "./BoxLikes";
 import RemoveIcon from "../assets/RemoveIcon.svg";
 import UserPicture from "./UserPicture";
+import { useUserData } from "../hooks/useUserData";
 
 export default function LinkrCard({
   id,
@@ -21,6 +22,7 @@ export default function LinkrCard({
   likes,
 }) {
   const [auth] = useAuth();
+  const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
 
@@ -34,9 +36,7 @@ export default function LinkrCard({
     e.preventDefault();
     setModalLoading(true);
     axios
-      .delete(`/linkr/delete/${id}`, {
-        headers: { Authorization: `Bearer ${auth?.token}` },
-      })
+      .delete(`/linkr/delete/${id}`, userData?.requestConfig)
       .then((res) => {
         setModalConfirmation(false);
         setModalLoading(false);
