@@ -12,7 +12,7 @@ export default function Trending(props) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${process.env.BASE_URL}/hashtag`)
+      .get(`${process.env.REACT_APP_BASE_URL}/hashtag`)
       .then((res) => {
         setTrending(res.data);
         console.log("RESPOSTA: ", res.data);

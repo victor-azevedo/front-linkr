@@ -27,7 +27,10 @@ export default function SignIn(props) {
       password,
     };
 
-    const promise = axios.post(`${process.env.BASE_URL}/signin`, body);
+    const promise = axios.post(
+      `${process.env.REACT_APP_BASE_URL}/signin`,
+      body
+    );
 
     promise.then((res) => {
       const newUserData = {

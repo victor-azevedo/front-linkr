@@ -31,7 +31,7 @@ export default function PostLinkr({ userPictureUrl }) {
       text: form.text,
     };
     axios
-      .post(`${process.env.BASE_URL}/linkrs`, body, userData?.requestConfig)
+      .post(`${process.env.REACT_APP_BASE_URL}/linkrs`, body, userData?.requestConfig)
       .then((res) => {
         setIsLoading(false);
         setForm({

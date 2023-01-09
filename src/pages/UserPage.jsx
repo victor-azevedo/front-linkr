@@ -23,7 +23,7 @@ export default function UserPage(props) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(process.env.BASE_URL + `/user/${userId}`, userData?.requestConfig)
+      .get(process.env.REACT_APP_BASE_URL + `/user/${userId}`, userData?.requestConfig)
       .then(({ data }) => {
         setLoading(false);
         setCards(data);
