@@ -5,7 +5,6 @@ import { decodeToken } from "react-jwt";
 import axios from "axios";
 import styled from "styled-components";
 
-import { BASE_URL } from "../constants/constants";
 import { useUserData } from "../hooks/useUserData";
 
 export default function SignIn(props) {
@@ -28,7 +27,7 @@ export default function SignIn(props) {
       password,
     };
 
-    const promise = axios.post(`${BASE_URL}/signin`, body);
+    const promise = axios.post(`${process.env.BASE_URL}/signin`, body);
 
     promise.then((res) => {
       const newUserData = {

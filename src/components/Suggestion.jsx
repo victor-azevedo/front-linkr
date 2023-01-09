@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { BASE_URL } from "../constants/constants";
 
 
 export default function Suggestion({profileUrl, username, id}){
