@@ -128,12 +128,12 @@ export default function LinkrCard({
         )}
         <Link href={link} target="blank">
           <LinkTexts>
-            <LinkTitle>{linkMetadata.title}</LinkTitle>
-            <LinkDescription>{linkMetadata.description}</LinkDescription>
+            <LinkTitle>{linkMetadata?.title}</LinkTitle>
+            <LinkDescription>{linkMetadata?.description}</LinkDescription>
             <LinkUrl>{link}</LinkUrl>
           </LinkTexts>
           <LinkImage>
-            <img src={linkMetadata.image} alt="" />
+            <img src={linkMetadata?.image} alt="" />
           </LinkImage>
         </Link>
       </div>

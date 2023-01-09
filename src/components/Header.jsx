@@ -9,10 +9,9 @@ import { BASE_URL } from "../constants/constants";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { useUserData } from "../hooks/useUserData";
 
-export default function Header({ userPictureUrl }) {
+export default function Header(props) {
   const [userQuery, setUserQuery] = useState("");
   const [suggestions, setSuggestions] = useState(null);
-  const [auth] = useAuth();
   const { userData } = useUserData();
 
   useEffect(() => {
@@ -58,7 +57,7 @@ export default function Header({ userPictureUrl }) {
           </div>
         </div>
       </SearchBar>
-      <UserPicture userPictureUrl={userPictureUrl} />
+      <UserPicture userPictureUrl={userData.pictureUrl} />
     </HeaderStyle>
   );
 }
