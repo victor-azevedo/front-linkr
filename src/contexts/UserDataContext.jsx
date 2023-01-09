@@ -1,9 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 export const userDataContext = createContext();
 
 export default function UserDataProvider({ children }) {
-  const [userData, setUserData] = useState({});
+  const userDataLocal = localStorage.getItem("userData");
+
+  const [userData, setUserData] = useState(JSON.parse(userDataLocal));
 
   return (
     <userDataContext.Provider value={{ userData, setUserData }}>
@@ -11,4 +13,3 @@ export default function UserDataProvider({ children }) {
     </userDataContext.Provider>
   );
 }
-

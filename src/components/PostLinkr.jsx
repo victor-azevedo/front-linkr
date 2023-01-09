@@ -1,8 +1,12 @@
-import axios from "axios";
 import { useState } from "react";
-import UserPicture from "./UserPicture";
-import styled from "styled-components";
 import { useNavigate } from "react-router";
+
+import axios from "axios";
+import styled from "styled-components";
+
+import UserPicture from "./UserPicture";
+import { useUserData } from "../hooks/useUserData";
+import { BASE_URL } from "../constants/constants";
 
 export default function PostLinkr({ userPictureUrl }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,6 +14,8 @@ export default function PostLinkr({ userPictureUrl }) {
     link: "",
     text: "",
   });
+
+  const { userData } = useUserData();
 
   const navigate = useNavigate();
 
@@ -26,7 +32,7 @@ export default function PostLinkr({ userPictureUrl }) {
       text: form.text,
     };
     axios
-      .post(`http://localhost:4000/linkrs`, body)
+      .post(`${BASE_URL}/linkrs`, body, userData?.requestConfig)
       .then((res) => {
         setIsLoading(false);
         setForm({

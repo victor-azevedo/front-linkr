@@ -1,21 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
 
-import { BASE_URL, PICTURE_USER } from "../constants/constants";
+import { BASE_URL } from "../constants/constants";
+import { useUserData } from "../hooks/useUserData";
 
 export default function Timeline(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [linksList, setLinksList] = useState([]);
 
+  const { userData } = useUserData();
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     setIsLoading(true);
     axios
-      // .get(`${BASE_URL}/linkrs`, userData.requestConfig)
-      .get(`${BASE_URL}/linkrs`)
+      .get(`${BASE_URL}/linkrs`, userData?.requestConfig)
       .then((res) => {
         setLinksList(res.data);
         setIsLoading(false);
@@ -25,6 +30,7 @@ export default function Timeline(props) {
           "An error occurred while trying to fetch the posts, please refresh the page"
         );
         setIsLoading(false);
+        navigate("/");
       });
   }, []);
 
@@ -51,11 +57,11 @@ export default function Timeline(props) {
 
   return (
     <Page>
-      <Header userPictureUrl={PICTURE_USER} />
+      <Header userPictureUrl={userData?.pictureUrl} />
       <TimelineStyle>
         <h2>timeline</h2>
         <Cards>
-          <PostLinkr userPictureUrl={PICTURE_USER} />
+          <PostLinkr userPictureUrl={userData?.pictureUrl} />
           {renderLinks()}
           {isLoading ? <Loading>Loading...</Loading> : null}
         </Cards>
