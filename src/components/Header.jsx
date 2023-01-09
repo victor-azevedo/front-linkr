@@ -16,6 +16,10 @@ export default function Header({ userPictureUrl }) {
   const { userData } = useUserData();
 
   useEffect(() => {
+    if (userQuery.length === 0){
+      setSuggestions(null);
+      return;
+    }
     axios
       .post(`${BASE_URL}/users/query`, { userQuery }, userData?.requestConfig)
       .then(({ data: apiSuggestions }) => {
@@ -23,7 +27,7 @@ export default function Header({ userPictureUrl }) {
       })
       .catch((err) => console.log(err));
   }, [userQuery]);
-
+  console.log(userQuery, suggestions)
   return (
     <HeaderStyle>
       <Logo>linkr</Logo>
@@ -43,17 +47,14 @@ export default function Header({ userPictureUrl }) {
           </div>
           <div className="suggestions">
             {suggestions &&
-              suggestions.length !== 0 &&
+              userQuery.length !== 0 &&
               suggestions.map((suggestion) => (
                 <Suggestion
-                  profileUrl={suggestion.profileUrl}
+                  profileUrl={suggestion.pictureUrl}
                   username={suggestion.username}
+                  id={suggestion.id}
                 />
               ))}
-            {/* <Suggestion
-                            profileUrl={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
-                            username={"teste"}
-                        /> */}
           </div>
         </div>
       </SearchBar>
