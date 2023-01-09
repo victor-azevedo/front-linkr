@@ -50,7 +50,7 @@ export default function BoxLikes({ id, likes }) {
     if (!isLiked) {
       axios
         .post(
-          `${process.env.BASE_URL}/linkrs/like/${id}`,
+          `${process.env.REACT_APP_BASE_URL}/linkrs/like/${id}`,
           {},
           userData?.requestConfig
         )
@@ -63,7 +63,7 @@ export default function BoxLikes({ id, likes }) {
         });
     } else {
       axios
-        .delete(`${process.env.BASE_URL}/linkrs/like/${id}`, userData?.requestConfig)
+        .delete(`${process.env.REACT_APP_BASE_URL}/linkrs/like/${id}`, userData?.requestConfig)
         .then((res) => {
           setIsLiked(!isLiked);
           setLikesCount(likesCount - 1);

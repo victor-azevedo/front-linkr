@@ -24,7 +24,7 @@ export default function SignUp(props) {
 
     setIsLoading(true);
 
-    const promise = axios.post(`${process.env.BASE_URL}/signup`, body);
+    const promise = axios.post(`${process.env.REACT_APP_BASE_URL}/signup`, body);
 
     promise.then(() => {
       navigate("/");

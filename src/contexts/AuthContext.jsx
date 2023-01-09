@@ -10,7 +10,7 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if (token) {
       axios
-        .get(`${process.env.BASE_URL}/user`, {
+        .get(`${process.env.REACT_APP_BASE_URL}/user`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(({ data }) => setAuth({ ...data, token: token }))

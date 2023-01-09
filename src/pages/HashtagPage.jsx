@@ -56,7 +56,7 @@ export default function HashtagPage() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${process.env.BASE_URL}/hashtag/${hashtag}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/hashtag/${hashtag}`)
       .then((res) => {
         setLinkrs([...res.data]);
         console.log("RESPOSTA: ", res.data);

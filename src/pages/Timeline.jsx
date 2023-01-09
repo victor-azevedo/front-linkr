@@ -26,7 +26,7 @@ export default function Timeline(props) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${process.env.BASE_URL}/linkrs`, userData?.requestConfig)
+      .get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
       .then((res) => {
         setLinksList(res.data);
         setIsLoading(false);

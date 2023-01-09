@@ -35,7 +35,10 @@ export default function LinkrCard({
     e.preventDefault();
     setModalLoading(true);
     axios
-      .delete(`${process.env.BASE_URL}/linkrs/delete/${id}`, userData?.requestConfig)
+      .delete(
+        `${process.env.REACT_APP_BASE_URL}/linkrs/delete/${id}`,
+        userData?.requestConfig
+      )
       .then((res) => {
         setModalConfirmation(false);
         setModalLoading(false);
@@ -64,9 +67,9 @@ export default function LinkrCard({
       setLoadingEdition(true);
       axios
         .put(
-          `${process.env.BASE_URL}/linkrs/edit/${id}`,
+          `${process.env.REACT_APP_BASE_URL}/linkrs/edit/${id}`,
           { updatedText: editTextInput },
-          userData.requestConfig 
+          userData.requestConfig
         )
         .then((res) => {
           text = editTextInput;
