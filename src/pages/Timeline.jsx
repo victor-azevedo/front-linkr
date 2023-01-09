@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
+import Trending from "../components/Trending";
 
 import { BASE_URL } from "../constants/constants";
 import { useUserData } from "../hooks/useUserData";
@@ -55,9 +56,9 @@ export default function Timeline(props) {
     }
   }
 
-  return (
-    <Page>
+  return (<>
       <Header userPictureUrl={userData?.pictureUrl} />
+    <Page>
       <TimelineStyle>
         <h2>timeline</h2>
         <Cards>
@@ -66,7 +67,9 @@ export default function Timeline(props) {
           {isLoading ? <Loading>Loading...</Loading> : null}
         </Cards>
       </TimelineStyle>
+      < Trending />
     </Page>
+  </>
   );
 }
 
@@ -77,6 +80,8 @@ const Page = styled.div`
   background-color: #333;
   color: #fff;
   padding-bottom: 150px;
+  display: flex;
+
 `;
 
 const TimelineStyle = styled.div`
