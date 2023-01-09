@@ -1,71 +1,86 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import Trending from "../components/Trending";
 import { BASE_URL } from "../constants/constants";
+import { useUserData } from "../hooks/useUserData";
 
+export default function HashtagPage() {
+  const { userData } = useUserData();
+  const navigate = useNavigate();
+  if (!userData) {
+    navigate("/");
+  }
 
-export default function HashtagPage(){
-    const { hashtag } = useParams();
-    const [isLoading, setIsLoading] = useState(false);
-    const [linkrs, setLinkrs] = useState([
-        {
-            id: 1,
-            username: "user1",
-            userPictureUrl: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            linkUrl: "https://www.google.com/",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-            linkMetadata: {
-              linkTitle: "Google",
-              linkDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-              linkImage: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            },
-            likes: 0,
-            comments: 0,
-          },
-          {
-            id: 2,
-            username: "user2",
-            userPictureUrl: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            linkUrl: "https://www.google.com/",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-            linkMetadata: {
-              linkTitle: "Google",
-              linkDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-              linkImage: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            },
-            likes: 0,
-            comments: 0,
-          },
-    ]);
+  const { hashtag } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [linkrs, setLinkrs] = useState([
+    {
+      id: 1,
+      username: "user1",
+      userPictureUrl:
+        "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+      linkUrl: "https://www.google.com/",
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
+      linkMetadata: {
+        linkTitle: "Google",
+        linkDescription:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
+        linkImage:
+          "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+      },
+      likes: 0,
+      comments: 0,
+    },
+    {
+      id: 2,
+      username: "user2",
+      userPictureUrl:
+        "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+      linkUrl: "https://www.google.com/",
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
+      linkMetadata: {
+        linkTitle: "Google",
+        linkDescription:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
+        linkImage:
+          "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+      },
+      likes: 0,
+      comments: 0,
+    },
+  ]);
 
-useEffect(() => {
+  useEffect(() => {
     setIsLoading(true);
     axios
       // .get(`${BASE_URL}/linkrs`, userData.requestConfig)
       .get(`${BASE_URL}/hashtag/${hashtag}`)
       .then((res) => {
         setLinkrs([...res.data]);
-        console.log("RESPOSTA: ", res.data)
+        console.log("RESPOSTA: ", res.data);
         setIsLoading(false);
       })
       .catch((err) => {
-        alert("An error occurred while trying to fetch the posts, please refresh the page");
+        alert(
+          "An error occurred while trying to fetch the posts, please refresh the page"
+        );
         setIsLoading(false);
       });
   }, []);
 
-
-    return (
-        <Page>
-            <Header/>
-            <Container>
-            <Title># <span>{hashtag}</span></Title>
-            <LinkrsandHashtags>
-                {/* <Linkrs>
+  return (
+    <Page>
+      <Header />
+      <Container>
+        <Title>
+          # <span>{hashtag}</span>
+        </Title>
+        <LinkrsandHashtags>
+          {/* <Linkrs>
                     {linkrs.map((linkr) => (
                         <LinkCard
                             key={linkr.id}
@@ -79,57 +94,55 @@ useEffect(() => {
                         />
                     ))}
                 </Linkrs> */}
-                <Trending/>
-                <Hashtags>
-                </Hashtags>
-            </LinkrsandHashtags>
-            </Container>
-        </Page>
-    );
+          <Trending />
+          <Hashtags></Hashtags>
+        </LinkrsandHashtags>
+      </Container>
+    </Page>
+  );
 }
 
 const Page = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    background-color: #333333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: #333333;
 `;
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 const Title = styled.h1`
-    color: #FFFFFF;
-    margin-top: 53px;
-    margin-bottom: 41px;
-    font-family: Oswald;
-    font-size: 43px;
-    font-weight: 700;
-    line-height: 64px;
-    letter-spacing: 0em;
-    text-align: left;
+  color: #ffffff;
+  margin-top: 53px;
+  margin-bottom: 41px;
+  font-family: Oswald;
+  font-size: 43px;
+  font-weight: 700;
+  line-height: 64px;
+  letter-spacing: 0em;
+  text-align: left;
 `;
 const LinkrsandHashtags = styled.div`
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 `;
 const Linkrs = styled.div`
-    margin-right: 25px;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin-right: 25px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 const Hashtags = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
-
 
 // LINKRCARD
 
@@ -267,4 +280,3 @@ const Hashtags = styled.div`
 //     letter-spacing: 0em;
 //     text-align: left;
 // `;
-
