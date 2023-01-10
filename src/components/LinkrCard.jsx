@@ -113,7 +113,7 @@ export default function LinkrCard({
           />
         )}
       </LinkCardStyle>
-      <Comments />
+      {/* <Comments /> */}
     </>
   );
 }
@@ -131,6 +131,7 @@ const LinkCardStyle = styled.div`
     position: relative;
     flex-basis: 501px;
   }
+  z-index: 2;
 `;
 
 const CardOptions = styled.aside`

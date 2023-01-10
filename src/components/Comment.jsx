@@ -17,10 +17,9 @@ export default function Comment({ props }) {
 const CommentStyle = styled.div`
   width: 100%;
   background: #1e1e1e;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 16px;
-  padding: 22px;
+
   display: flex;
+  padding: 10px;
   justify-content: space-between;
   align-items: flex-start;
   .link-data {
