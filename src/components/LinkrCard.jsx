@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import styled from "styled-components";
+import { ReactTagify } from "react-tagify";
 
 import EditIcon from "../assets/EditIcon.svg";
 import RemoveIcon from "../assets/RemoveIcon.svg";
@@ -92,7 +93,11 @@ export default function LinkrCard({
             text={text}
           />
         ) : (
+          <ReactTagify 
+          colors={"white"} 
+          tagClicked={(tag)=> navigate(`/hashtag/${tag.replace("#","")}`)}>
           <Text>{editTextInput}</Text>
+          </ReactTagify>
         )}
         <Link href={link} target="blank">
           <LinkTexts>
