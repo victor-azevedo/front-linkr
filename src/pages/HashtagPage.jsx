@@ -35,7 +35,7 @@ export default function HashtagPage() {
         );
         setIsLoading(false);
       });
-  }, []);
+  }, [hashtag]);
 
   return (
     <Page>

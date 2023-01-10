@@ -27,12 +27,13 @@ export default function UserPage(props) {
       .then(({ data }) => {
         setLoading(false);
         setCards(data);
+        console.log(data);
       })
       .catch((err) => {
         setLoading(false);
         console.log(err);
       });
-  }, []);
+  }, [userId]);
 
   return (
     <StyledUserPage>
