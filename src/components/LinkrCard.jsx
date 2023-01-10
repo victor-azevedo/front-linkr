@@ -5,10 +5,12 @@ import axios from "axios";
 import styled from "styled-components";
 
 import EditIcon from "../assets/EditIcon.svg";
+import RemoveIcon from "../assets/RemoveIcon.svg";
+
+import UserPicture from "./UserPicture";
 import BoxLikes from "./BoxLikes";
 import BoxIconComments from "./BoxIconComments";
-import RemoveIcon from "../assets/RemoveIcon.svg";
-import UserPicture from "./UserPicture";
+import BoxIconShares from "./BoxIconShares";
 
 import ModalConfirmationDelete from "./ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
@@ -61,6 +63,7 @@ export default function LinkrCard({
         <UserPicture userPictureUrl={userPictureUrl} />
         <BoxLikes id={id} likes={likes} />
         <BoxIconComments id={id} />
+        <BoxIconShares id={id} />
       </CardOptions>
       <div className="link-data">
         {userData?.username === username && (
