@@ -3,16 +3,18 @@ import axios from "axios";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useUserData } from "../hooks/useUserData";
 
 export default function Trending(props) {
   //requisição backend
   const [trending, setTrending] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const {userData} = useUserData();
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/hashtag`)
+      .get(`${process.env.REACT_APP_BASE_URL}/hashtag`, userData.requestConfig)
       .then((res) => {
         setTrending(res.data);
         setIsLoading(false);
