@@ -62,8 +62,6 @@ export default function LinkrCard({
       <CardOptions>
         <UserPicture userPictureUrl={userPictureUrl} />
         <BoxLikes id={id} likes={likes} />
-        <BoxIconComments id={id} />
-        <BoxIconShares id={id} />
       </CardOptions>
       <div className="link-data">
         {userData?.username === username && (
