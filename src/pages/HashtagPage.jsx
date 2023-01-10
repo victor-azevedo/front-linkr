@@ -16,42 +16,9 @@ export default function HashtagPage() {
 
   const { hashtag } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [linkrs, setLinkrs] = useState([
-    {
-      id: 1,
-      username: "user1",
-      userPictureUrl:
-        "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-      linkUrl: "https://www.google.com/",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-      linkMetadata: {
-        linkTitle: "Google",
-        linkDescription:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-        linkImage:
-          "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-      },
-      likes: 0,
-      comments: 0,
-    },
-    {
-      id: 2,
-      username: "user2",
-      userPictureUrl:
-        "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-      linkUrl: "https://www.google.com/",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-      linkMetadata: {
-        linkTitle: "Google",
-        linkDescription:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl. Sed euismod, nunc vel ultricies lacinia, nunc nisl ultricies nisl, nec ultricies nunc nisl euismod nisl.",
-        linkImage:
-          "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-      },
-      likes: 0,
-      comments: 0,
-    },
-  ]);
+  const [linkrs, setLinkrs] = useState(null);
+
+  console.log(linkrs);
 
   useEffect(() => {
     setIsLoading(true);
@@ -78,20 +45,20 @@ export default function HashtagPage() {
           # <span>{hashtag}</span>
         </Title>
         <LinkrsandHashtags>
-          {/* <Linkrs>
-                    {linkrs.map((linkr) => (
+          <Linkrs>
+                    {linkrs && linkrs.map((linkr) => (
                         <LinkCard
                             key={linkr.id}
                             id={linkr.id}
                             username={linkr.username}
-                            userPictureUrl={linkr.userPictureUrl}
+                            userPictureUrl={linkr.pictureUrl}
                             link={linkr.linkUrl}
                             text={linkr.text}
                             linkMetadata={linkr.linkMetadata}
                             likes={linkr.likes}
                         />
                     ))}
-                </Linkrs> */}
+                </Linkrs>
           <Trending />
           <Hashtags></Hashtags>
         </LinkrsandHashtags>
@@ -129,6 +96,7 @@ const LinkrsandHashtags = styled.div`
   flex-direction: row;
 `;
 const Linkrs = styled.div`
+  width: 611px;
   margin-right: 25px;
   border-radius: 16px;
   display: flex;
