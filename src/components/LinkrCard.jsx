@@ -23,6 +23,7 @@ export default function LinkrCard({
   likes,
   userId,
 }) {
+  console.log(userId);
   const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);

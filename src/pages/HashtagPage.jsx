@@ -56,6 +56,7 @@ export default function HashtagPage() {
                             text={linkr.text}
                             linkMetadata={linkr.linkMetadata}
                             likes={linkr.likes}
+                            userId={linkr.userId}
                         />
                     ))}
                 </Linkrs>

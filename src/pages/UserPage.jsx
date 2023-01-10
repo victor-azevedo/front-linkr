@@ -67,6 +67,7 @@ export default function UserPage(props) {
                     text={card.text}
                     linkMetadata={card.linkMetadata}
                     likes={card.likes}
+                    userId={card.userId}
                   />
                 }
               </div>
