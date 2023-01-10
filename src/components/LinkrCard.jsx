@@ -5,9 +5,12 @@ import axios from "axios";
 import styled from "styled-components";
 
 import EditIcon from "../assets/EditIcon.svg";
-import BoxLikes from "./BoxLikes";
 import RemoveIcon from "../assets/RemoveIcon.svg";
+
 import UserPicture from "./UserPicture";
+import BoxLikes from "./BoxLikes";
+import BoxIconComments from "./BoxIconComments";
+import BoxIconShares from "./BoxIconShares";
 
 import ModalConfirmationDelete from "./ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
@@ -57,10 +60,10 @@ export default function LinkrCard({
 
   return (
     <LinkCardStyle>
-      <div>
+      <CardOptions>
         <UserPicture userPictureUrl={userPictureUrl} />
         <BoxLikes id={id} likes={likes} />
-      </div>
+      </CardOptions>
       <div className="link-data">
         {userData?.username === username && (
           <EditionAndDeletion>
@@ -122,11 +125,19 @@ const LinkCardStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 18px;
   .link-data {
     position: relative;
     flex-basis: 501px;
   }
+`;
+
+const CardOptions = styled.aside`
+  min-width: 70px;
+  height: 100%;
+  margin-right: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Username = styled.p`
