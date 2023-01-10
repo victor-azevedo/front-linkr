@@ -10,6 +10,7 @@ import BoxLikes from "./BoxLikes";
 import RemoveIcon from "../assets/RemoveIcon.svg";
 import UserPicture from "./UserPicture";
 import { useUserData } from "../hooks/useUserData";
+import { useNavigate } from "react-router-dom";
 
 export default function LinkrCard({
   id,
@@ -19,8 +20,8 @@ export default function LinkrCard({
   text,
   linkMetadata,
   likes,
+  userId
 }) {
-  const [auth] = useAuth();
   const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -30,6 +31,8 @@ export default function LinkrCard({
   const [loadingEdition, setLoadingEdition] = useState(false);
   const [editAPIAccepted, setEditAPIAccepted] = useState(false);
   const inputRef = useRef(null);
+
+  const navigate = useNavigate();
 
   function handleCardRemoval(e) {
     e.preventDefault();
@@ -114,7 +117,7 @@ export default function LinkrCard({
             />
           </EditionAndDeletion>
         )}
-        <Username>{username}</Username>
+        <Username onClick={() => navigate(`/user/${userId}`)}>{username}</Username>
         {isTextEditable ? (
           <TextEditor
             type="text"

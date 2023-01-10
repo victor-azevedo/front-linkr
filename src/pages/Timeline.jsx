@@ -98,7 +98,7 @@ const Page = styled.div`
 `;
 
 const TimelineStyle = styled.div`
-  max-width: 611px;
+  width: 611px;
   margin-top: 150px;
   margin-bottom: 0px;
   margin-right: 20px;

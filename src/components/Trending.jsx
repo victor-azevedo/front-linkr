@@ -15,7 +15,6 @@ export default function Trending(props) {
       .get(`${process.env.REACT_APP_BASE_URL}/hashtag`)
       .then((res) => {
         setTrending(res.data);
-        console.log("RESPOSTA: ", res.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -30,7 +29,7 @@ export default function Trending(props) {
         <TrendingTitle>trending</TrendingTitle>
         <TrendingLine></TrendingLine>
         {trending.map((hashtag) => (
-          <Link to={`/hashtag/${hashtag}`} key={hashtag.id}>
+          <Link to={`/hashtag/${hashtag.hashtag}`} key={hashtag.id}>
             <TrendingHashtags>#{hashtag.hashtag}</TrendingHashtags>
           </Link>
         ))}
