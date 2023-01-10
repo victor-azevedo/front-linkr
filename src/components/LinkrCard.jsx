@@ -13,6 +13,7 @@ import UserPicture from "./UserPicture";
 import ModalConfirmationDelete from "./ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
 import { useUserData } from "../hooks/useUserData";
+import Comments from "./Comments";
 
 export default function LinkrCard({
   id,
@@ -56,61 +57,64 @@ export default function LinkrCard({
   }
 
   return (
-    <LinkCardStyle>
-      <CardOptions>
-        <UserPicture userPictureUrl={userPictureUrl} />
-        <BoxLikes id={id} likes={likes} />
-        <BoxIconComments id={id} />
-      </CardOptions>
-      <div className="link-data">
-        {userData?.username === username && (
-          <EditionAndDeletion>
-            <img
-              src={EditIcon}
-              alt="edit linkr icon"
-              onClick={() => setIsTextEditable(!isTextEditable)}
+    <>
+      <LinkCardStyle>
+        <CardOptions>
+          <UserPicture userPictureUrl={userPictureUrl} />
+          <BoxLikes id={id} likes={likes} />
+          <BoxIconComments id={id} />
+        </CardOptions>
+        <div className="link-data">
+          {userData?.username === username && (
+            <EditionAndDeletion>
+              <img
+                src={EditIcon}
+                alt="edit linkr icon"
+                onClick={() => setIsTextEditable(!isTextEditable)}
+              />
+              <img
+                src={RemoveIcon}
+                alt="remove linkr icon"
+                onClick={(e) => setModalConfirmation(true)}
+              />
+            </EditionAndDeletion>
+          )}
+          <Username onClick={() => navigate(`/user/${userId}`)}>
+            {username}
+          </Username>
+          {isTextEditable ? (
+            <LinkTextEditor
+              id={id}
+              setEditTextInput={setEditTextInput}
+              isTextEditable={isTextEditable}
+              setIsTextEditable={setIsTextEditable}
+              editTextInput={editTextInput}
+              text={text}
             />
-            <img
-              src={RemoveIcon}
-              alt="remove linkr icon"
-              onClick={(e) => setModalConfirmation(true)}
-            />
-          </EditionAndDeletion>
-        )}
-        <Username onClick={() => navigate(`/user/${userId}`)}>
-          {username}
-        </Username>
-        {isTextEditable ? (
-          <LinkTextEditor
-            id={id}
-            setEditTextInput={setEditTextInput}
-            isTextEditable={isTextEditable}
-            setIsTextEditable={setIsTextEditable}
-            editTextInput={editTextInput}
-            text={text}
+          ) : (
+            <Text>{editTextInput}</Text>
+          )}
+          <Link href={link} target="blank">
+            <LinkTexts>
+              <LinkTitle>{linkMetadata?.title}</LinkTitle>
+              <LinkDescription>{linkMetadata?.description}</LinkDescription>
+              <LinkUrl>{link}</LinkUrl>
+            </LinkTexts>
+            <LinkImage>
+              <img src={linkMetadata?.image} alt="" />
+            </LinkImage>
+          </Link>
+        </div>
+        {modalConfirmation && (
+          <ModalConfirmationDelete
+            modalLoading={modalLoading}
+            setModalConfirmation={setModalConfirmation}
+            handleCardRemoval={handleCardRemoval}
           />
-        ) : (
-          <Text>{editTextInput}</Text>
         )}
-        <Link href={link} target="blank">
-          <LinkTexts>
-            <LinkTitle>{linkMetadata?.title}</LinkTitle>
-            <LinkDescription>{linkMetadata?.description}</LinkDescription>
-            <LinkUrl>{link}</LinkUrl>
-          </LinkTexts>
-          <LinkImage>
-            <img src={linkMetadata?.image} alt="" />
-          </LinkImage>
-        </Link>
-      </div>
-      {modalConfirmation && (
-        <ModalConfirmationDelete
-          modalLoading={modalLoading}
-          setModalConfirmation={setModalConfirmation}
-          handleCardRemoval={handleCardRemoval}
-        />
-      )}
-    </LinkCardStyle>
+      </LinkCardStyle>
+      <Comments />
+    </>
   );
 }
 
