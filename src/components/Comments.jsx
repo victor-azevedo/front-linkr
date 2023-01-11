@@ -6,9 +6,44 @@ import Comment from "./Comment";
 
 import UserPicture from "./UserPicture";
 import { ReactComponent as SendCommentIcon } from "../assets/SendCommentIcon.svg";
+import { useState } from "react";
+import axios from "axios";
 
-export default function Comments({ props }) {
+export default function Comments({ linkId, userOwner }) {
   const { userData } = useUserData();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [commentText, setCommentText] = useState("");
+
+  function sendComment() {
+    if (commentText.length < 3) {
+      alert("Comentário deve ter mais do que 3 caracteres!");
+      return;
+    }
+
+    setIsLoading(true);
+    const body = {
+      commenterId: userData?.id,
+      commentText,
+    };
+
+    console.log(body);
+
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/comments/${linkId}`,
+        body,
+        userData?.requestConfig
+      )
+      .then((res) => {
+        setIsLoading(false);
+        setCommentText("");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        alert("An error occurred while trying to comment post");
+      });
+  }
 
   return (
     <CommentsStyle>
@@ -17,8 +52,16 @@ export default function Comments({ props }) {
       <CommentEntry>
         <UserPicture userPictureUrl={userData.pictureUrl} />
         <BoxInput>
-          <input placeholder="write a comment..."></input>
-          <StyledSendCommentIcon />
+          <input
+            onChange={(e) => setCommentText(e.target.value)}
+            value={commentText}
+            disabled={isLoading}
+            placeholder="write a comment..."
+            name="comment"
+            type="text"
+            required
+          ></input>
+          <StyledSendCommentIcon onClick={sendComment} />
         </BoxInput>
       </CommentEntry>
     </CommentsStyle>
@@ -48,7 +91,7 @@ const CommentEntry = styled.div`
   gap: 6px;
 `;
 
-const BoxInput = styled.div`
+const BoxInput = styled.form`
   width: 100%;
   position: relative;
   input {

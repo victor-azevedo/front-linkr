@@ -119,7 +119,7 @@ export default function LinkrCard({
           />
         )}
       </LinkCardStyle>
-      {showComments && <Comments />}
+      {showComments && <Comments linkId={id} userOwner={userId} />}
     </>
   );
 }
