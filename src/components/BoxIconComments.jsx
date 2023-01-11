@@ -4,14 +4,14 @@ import { ReactComponent as CommentsIcon } from "../assets/CommentsIcon.svg";
 
 export default function BoxIconComments({
   id,
-  comments,
+  commentsCount,
   setShowComments,
   showComments,
 }) {
   return (
     <BoxCommentsStyle onClick={() => setShowComments(!showComments)}>
       <StyledCommentsIcon />
-      <CommentsCount>0 comments</CommentsCount>
+      <CommentsCount>{commentsCount} comments</CommentsCount>
     </BoxCommentsStyle>
   );
 }
