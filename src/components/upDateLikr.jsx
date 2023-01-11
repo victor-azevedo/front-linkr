@@ -1,9 +1,17 @@
+import { useState } from "react";
 import styled from "styled-components"
 import ImageUpDate from "../assets/ImageUpDate.svg";
 
-export default function UpDatePost() {
+export default function UpDatePost({linksList}) {
+
+    const [contNewPost, setContNewPost] = useState(linksList.length);
+
+    function renderNewPost(linksList){
+        console.log(linksList)
+      }
+
     return (
-        <NewPostButton>
+        <NewPostButton onClick={() => renderNewPost(linksList)}>
             12 new posts, load more!
             <img src={ImageUpDate}
                 alt="icon upDate" />
