@@ -113,7 +113,7 @@ export default function LinkrCard({
           />
         )}
       </LinkCardStyle>
-      {/* <Comments /> */}
+      <Comments />
     </>
   );
 }
