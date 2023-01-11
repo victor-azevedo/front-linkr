@@ -32,6 +32,8 @@ export default function LinkrCard({
   const [isTextEditable, setIsTextEditable] = useState(false);
   const [editTextInput, setEditTextInput] = useState(text);
 
+  const [showComments, setShowComments] = useState(false);
+
   const navigate = useNavigate();
 
   function handleCardRemoval(e) {
@@ -62,7 +64,11 @@ export default function LinkrCard({
         <CardOptions>
           <UserPicture userPictureUrl={userPictureUrl} />
           <BoxLikes id={id} likes={likes} />
-          <BoxIconComments id={id} />
+          <BoxIconComments
+            id={id}
+            setShowComments={setShowComments}
+            showComments={showComments}
+          />
         </CardOptions>
         <div className="link-data">
           {userData?.username === username && (
@@ -113,7 +119,7 @@ export default function LinkrCard({
           />
         )}
       </LinkCardStyle>
-      <Comments />
+      {showComments && <Comments />}
     </>
   );
 }
