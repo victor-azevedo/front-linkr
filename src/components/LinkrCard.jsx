@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import styled from "styled-components";
+import { ReactTagify } from "react-tagify";
 
 import EditIcon from "../assets/EditIcon.svg";
 import BoxLikes from "./BoxLikes";
@@ -25,6 +26,7 @@ export default function LinkrCard({
   likes,
   userId,
 }) {
+  console.log(userId);
   const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -92,7 +94,11 @@ export default function LinkrCard({
               text={text}
             />
           ) : (
+            <ReactTagify 
+            colors={"white"} 
+            tagClicked={(tag)=> navigate(`/hashtag/${tag.replace("#","")}`)}>
             <Text>{editTextInput}</Text>
+            </ReactTagify>
           )}
           <Link href={link} target="blank">
             <LinkTexts>
@@ -111,7 +117,7 @@ export default function LinkrCard({
             setModalConfirmation={setModalConfirmation}
             handleCardRemoval={handleCardRemoval}
           />
-        )}
+        ) }
       </LinkCardStyle>
       {/* <Comments /> */}
     </>

@@ -11,8 +11,8 @@ const UserPictureStyle = styled.div`
   height: 50px;
   width: 50px;
   img {
-    height: 100%;
-    width: 100%;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     object-fit: cover;
   }

@@ -40,6 +40,7 @@ export default function Timeline(props) {
         navigate("/");
       });
   }, []);
+  console.log(linksList)
 
   function renderLinks() {
     if (!linksList) {
@@ -56,6 +57,7 @@ export default function Timeline(props) {
             text={link.text}
             linkMetadata={link.linkMetadata}
             likes={link.likes}
+            userId={link.userId}
           />
         );
       });
