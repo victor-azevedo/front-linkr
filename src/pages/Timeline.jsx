@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
 import Trending from "../components/Trending";
+import UpDatePost from "../components/upDateLikr";
 
 import { useUserData } from "../hooks/useUserData";
 
@@ -69,6 +70,7 @@ export default function Timeline(props) {
           <h2>timeline</h2>
           <Cards>
             <PostLinkr userPictureUrl={userData?.pictureUrl} />
+            <UpDatePost/>
             {renderLinks()}
             {isLoading ? <Loading>Loading...</Loading> : null}
           </Cards>
