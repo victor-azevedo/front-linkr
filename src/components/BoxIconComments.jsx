@@ -2,9 +2,14 @@ import styled from "styled-components";
 
 import { ReactComponent as CommentsIcon } from "../assets/CommentsIcon.svg";
 
-export default function BoxIconComments({ id, comments }) {
+export default function BoxIconComments({
+  id,
+  comments,
+  setShowComments,
+  showComments,
+}) {
   return (
-    <BoxCommentsStyle>
+    <BoxCommentsStyle onClick={() => setShowComments(!showComments)}>
       <StyledCommentsIcon />
       <CommentsCount>0 comments</CommentsCount>
     </BoxCommentsStyle>

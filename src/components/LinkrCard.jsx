@@ -8,6 +8,7 @@ import { ReactTagify } from "react-tagify";
 import EditIcon from "../assets/EditIcon.svg";
 import BoxLikes from "./BoxLikes";
 import BoxIconComments from "./BoxIconComments";
+import BoxIconShares from "./BoxIconShares";
 import RemoveIcon from "../assets/RemoveIcon.svg";
 import UserPicture from "./UserPicture";
 
@@ -33,6 +34,8 @@ export default function LinkrCard({
 
   const [isTextEditable, setIsTextEditable] = useState(false);
   const [editTextInput, setEditTextInput] = useState(text);
+
+  const [showComments, setShowComments] = useState(false);
 
   const navigate = useNavigate();
 
@@ -64,7 +67,12 @@ export default function LinkrCard({
         <CardOptions>
           <UserPicture userPictureUrl={userPictureUrl} />
           <BoxLikes id={id} likes={likes} />
-          <BoxIconComments id={id} />
+          <BoxIconComments
+            id={id}
+            setShowComments={setShowComments}
+            showComments={showComments}
+          />
+          <BoxIconShares id={id}/>
         </CardOptions>
         <div className="link-data">
           {userData?.username === username && (
@@ -119,7 +127,7 @@ export default function LinkrCard({
           />
         ) }
       </LinkCardStyle>
-      {/* <Comments /> */}
+      {showComments && <Comments linkId={id} userOwner={userId} />}
     </>
   );
 }

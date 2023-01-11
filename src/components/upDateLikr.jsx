@@ -1,22 +1,50 @@
 import { useState } from "react";
 import styled from "styled-components"
+import { useUserData } from "../hooks/useUserData";
 import ImageUpDate from "../assets/ImageUpDate.svg";
+import useInterval from "use-interval";
+import axios from "axios";
 
-export default function UpDatePost({linksList}) {
+export default function UpDatePost({ linksList }) {
+    const { userData } = useUserData();
+    const [contNewPost, setContNewPost] = useState(0);
+    const [newPost, setNewPost] = useState([])
+    const countPost = linksList.length;
+    console.log("tinha", countPost)
+    const [contador, setContador] = useState(0)
 
-    const [contNewPost, setContNewPost] = useState(linksList.length);
 
-    function renderNewPost(linksList){
-        console.log(linksList)
-      }
+    function renderNewPost() {
+        window.location.reload(true);
+    }
 
-    return (
-        <NewPostButton onClick={() => renderNewPost(linksList)}>
-            12 new posts, load more!
-            <img src={ImageUpDate}
-                alt="icon upDate" />
-        </NewPostButton>
-    )
+    const [count, setCount] = useState(0)    
+  
+    useInterval(
+      () => {
+        axios.get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
+        .then((res) => {
+          setNewPost(res.data);
+          setContNewPost(newPost.length)
+          console.log("tem agora" ,newPost.length)
+        })
+        .catch((err) => {
+            console.log("errooo");
+        }) 
+        
+      },1000)
+  
+   
+    if (countPost >= contNewPost) return null;
+    else {
+        return (
+            <NewPostButton onClick={() => renderNewPost(linksList)}>
+                {contador} new posts, load more!
+                <img src={ImageUpDate}
+                    alt="icon upDate" />
+            </NewPostButton>
+        )
+    }
 }
 
 const NewPostButton = styled.div`

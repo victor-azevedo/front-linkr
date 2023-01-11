@@ -5,9 +5,45 @@ import { useUserData } from "../hooks/useUserData";
 import Comment from "./Comment";
 
 import UserPicture from "./UserPicture";
+import { ReactComponent as SendCommentIcon } from "../assets/SendCommentIcon.svg";
+import { useState } from "react";
+import axios from "axios";
 
-export default function Comments({ props }) {
+export default function Comments({ linkId, userOwner }) {
   const { userData } = useUserData();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [commentText, setCommentText] = useState("");
+
+  function sendComment() {
+    if (commentText.length < 3) {
+      alert("Comentário deve ter mais do que 3 caracteres!");
+      return;
+    }
+
+    setIsLoading(true);
+    const body = {
+      commenterId: userData?.id,
+      commentText,
+    };
+
+    console.log(body);
+
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/comments/${linkId}`,
+        body,
+        userData?.requestConfig
+      )
+      .then((res) => {
+        setIsLoading(false);
+        setCommentText("");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        alert("An error occurred while trying to comment post");
+      });
+  }
 
   return (
     <CommentsStyle>
@@ -15,7 +51,18 @@ export default function Comments({ props }) {
       <Comment />
       <CommentEntry>
         <UserPicture userPictureUrl={userData.pictureUrl} />
-        <input placeholder="write a comment..."></input>
+        <BoxInput>
+          <input
+            onChange={(e) => setCommentText(e.target.value)}
+            value={commentText}
+            disabled={isLoading}
+            placeholder="write a comment..."
+            name="comment"
+            type="text"
+            required
+          ></input>
+          <StyledSendCommentIcon onClick={sendComment} />
+        </BoxInput>
       </CommentEntry>
     </CommentsStyle>
   );
@@ -23,6 +70,7 @@ export default function Comments({ props }) {
 
 const CommentsStyle = styled.div`
   width: 100%;
+  padding: 20px;
   background: #1e1e1e;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 0 0 16px 16px;
@@ -30,18 +78,22 @@ const CommentsStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  translate: 0 -30px;
-  padding-top: 20px;
+  translate: 0 -35px;
   z-index: 1;
 `;
 
 const CommentEntry = styled.div`
   width: 100%;
-  padding: 10px;
+  padding: 15px 5px 0px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 6px;
+`;
+
+const BoxInput = styled.form`
+  width: 100%;
+  position: relative;
   input {
     width: 100%;
     height: 39px;
@@ -51,10 +103,22 @@ const CommentEntry = styled.div`
     font-size: 14px;
     line-height: 17px;
     padding: 0 10px;
+    margin-left: 10px;
     color: #575757;
     font-style: italic;
     background-color: #252525;
     border-radius: 8px;
     border: none;
+  }
+`;
+
+const StyledSendCommentIcon = styled(SendCommentIcon)`
+  position: absolute;
+  height: 100%;
+  z-index: 2;
+  right: 0px;
+  top: 0;
+  &:hover {
+    cursor: pointer;
   }
 `;

@@ -40,7 +40,6 @@ export default function Timeline(props) {
         navigate("/");
       });
   }, []);
-  console.log(linksList)
 
   function renderLinks() {
     if (!linksList) {
@@ -72,7 +71,7 @@ export default function Timeline(props) {
           <h2>timeline</h2>
           <Cards>
             <PostLinkr userPictureUrl={userData?.pictureUrl} />
-            <UpDatePost/>
+            <UpDatePost linksList={linksList}/>
             {renderLinks()}
             {isLoading ? <Loading>Loading...</Loading> : null}
           </Cards>
