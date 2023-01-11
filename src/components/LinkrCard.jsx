@@ -8,6 +8,7 @@ import { ReactTagify } from "react-tagify";
 import EditIcon from "../assets/EditIcon.svg";
 import BoxLikes from "./BoxLikes";
 import BoxIconComments from "./BoxIconComments";
+import BoxIconShares from "./BoxIconShares";
 import RemoveIcon from "../assets/RemoveIcon.svg";
 import UserPicture from "./UserPicture";
 
@@ -71,6 +72,7 @@ export default function LinkrCard({
             setShowComments={setShowComments}
             showComments={showComments}
           />
+          <BoxIconShares id={id}/>
         </CardOptions>
         <div className="link-data">
           {userData?.username === username && (
