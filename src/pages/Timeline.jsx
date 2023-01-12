@@ -51,6 +51,8 @@ export default function Timeline(props) {
     //eslint-disable-next-line
   }, []);
 
+  console.log(linksList)
+
   function renderLinks() {
     if (!linksList) {
       return (
@@ -62,6 +64,7 @@ export default function Timeline(props) {
       );
     } else {
       return linksList.map((link) => {
+
         return (
           <LinkCard
             key={link.id}
@@ -74,6 +77,7 @@ export default function Timeline(props) {
             likes={link.likes}
             userId={link.userId}
             commentsCount={link.commentsCount}
+            repostsCount={link}
           />
         );
       });
