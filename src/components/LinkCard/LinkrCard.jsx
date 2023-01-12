@@ -69,7 +69,9 @@ export default function LinkrCard({ card }) {
     <>
       <LinkCardStyle>
         <CardOptions>
-          <UserPicture userPictureUrl={userPictureUrl} />
+          <div className="user-picture">
+            <UserPicture userPictureUrl={userPictureUrl} />
+          </div>
           <BoxLikes id={id} likes={likes} />
           <BoxIconComments
             id={id}
@@ -167,6 +169,10 @@ const CardOptions = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
+  .user-picture{
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const Username = styled.p`
