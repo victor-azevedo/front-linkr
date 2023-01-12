@@ -29,7 +29,6 @@ export default function LinkrCard({
   commentsCount,
   repostsCount,
 }) {
-  console.log(userId);
   const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -137,7 +136,7 @@ export default function LinkrCard({
       {showComments && (
         <Comments
           linkId={id}
-          userOwner={userId}
+          userOwnerId={userId}
           setCommentsCountState={setCommentsCountState}
         />
       )}

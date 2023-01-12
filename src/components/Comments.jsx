@@ -9,8 +9,14 @@ import { ReactComponent as SendCommentIcon } from "../assets/SendCommentIcon.svg
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Comments({ linkId, userOwner, setCommentsCountState }) {
+export default function Comments({
+  linkId,
+  userOwnerId,
+  setCommentsCountState,
+}) {
   const { userData } = useUserData();
+
+  const followerId = 0;
 
   const [isLoading, setIsLoading] = useState(false);
   const [commentText, setCommentText] = useState("");
@@ -79,6 +85,9 @@ export default function Comments({ linkId, userOwner, setCommentsCountState }) {
           commentText={c.commentText}
           commenterName={c.commenterName}
           commenterPicture={c.commenterPicture}
+          commenterId={c.commenterId}
+          userOwnerId={userOwnerId}
+          followerId={followerId}
         />
       ))}
       <CommentEntry>
