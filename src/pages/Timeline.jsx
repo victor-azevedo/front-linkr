@@ -10,6 +10,7 @@ import UpDatePost from "../components/upDateLikr";
 import InfiniteScroll from "react-infinite-scroller";
 
 import { useUserData } from "../hooks/useUserData";
+import { useFollowing } from "../hooks/useFollowing";
 
 export default function Timeline(props) {
   const { userData } = useUserData();
@@ -20,7 +21,7 @@ export default function Timeline(props) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [linksList, setLinksList] = useState([]);
-  const [followersList, setFollowersList] = useState([]);
+  const { followersList, setFollowersList } = useFollowing();
   const [count, setCount] = useState(0);
   if (!userData) {
     navigate("/");
@@ -73,7 +74,7 @@ export default function Timeline(props) {
               hasMore={false}
               loader={<Loading>Loading...</Loading>}
             >
-              <RenderCards cards={linksList} followersList={followersList} />
+              <RenderCards cards={linksList} />
             </InfiniteScroll>
             {/* {isLoading ? <Loading>Loading...</Loading> : null} */}
           </Cards>

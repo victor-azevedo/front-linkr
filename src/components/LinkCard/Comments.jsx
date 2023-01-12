@@ -16,8 +16,6 @@ export default function Comments({
 }) {
   const { userData } = useUserData();
 
-  const followerId = 0;
-
   const [isLoading, setIsLoading] = useState(false);
   const [commentText, setCommentText] = useState("");
 
@@ -88,7 +86,6 @@ export default function Comments({
           commenterPicture={c.commenterPicture}
           commenterId={c.commenterId}
           userOwnerId={userOwnerId}
-          followerId={followerId}
         />
       ))}
       <CommentEntry>

@@ -10,11 +10,11 @@ export default function UserPicture({ userPictureUrl }) {
 const UserPictureStyle = styled.div`
   height: 100%;
   width: 100%;
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 55px;
+  max-height: 55px;
   img {
-    height: 100%;
-    width: 100%;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     object-fit: cover;
   }

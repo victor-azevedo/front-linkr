@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { useFollowing } from "../hooks/useFollowing";
 import LinkCard from "./LinkCard/LinkrCard";
 
-export default function RenderCards({ cards, followersList }) {
+export default function RenderCards({ cards }) {
+  const { followersList } = useFollowing();
   if (!cards) {
     return (
       <p>

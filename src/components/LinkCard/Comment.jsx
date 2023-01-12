@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import UserPicture from "./../UserPicture";
+import UserPicture from "../UserPicture";
+import { useFollowing } from "../../hooks/useFollowing";
 
 export default function Comment({
   commentText,
@@ -8,21 +9,27 @@ export default function Comment({
   commenterPicture,
   commenterId,
   userOwnerId,
-  followerId,
 }) {
+  const { followersList } = useFollowing();
+
+  const follower = followersList.find(
+    (f) => Number(f?.followingId) === Number(commenterId)
+  );
+
   return (
     <CommentStyle>
       <UserPicture userPictureUrl={commenterPicture} />
       <div className="box-texts">
         <CommenterName>{commenterName}</CommenterName>
-        {Number(commenterId) === Number(userOwnerId) && (
+        {Number(commenterId) === Number(userOwnerId) ? (
           <AuthorComment className="extra-text"> • post’s author</AuthorComment>
-        )}
-        {Number(commenterId) === Number(followerId) && (
-          <FollowingComment className="extra-text">
-            {" "}
-            • following
-          </FollowingComment>
+        ) : (
+          Number(commenterId) === Number(follower?.followingId) && (
+            <FollowingComment className="extra-text">
+              {" "}
+              • following
+            </FollowingComment>
+          )
         )}
         <CommentText>{commentText}</CommentText>
       </div>
