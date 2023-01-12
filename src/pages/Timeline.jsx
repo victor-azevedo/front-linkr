@@ -31,7 +31,7 @@ export default function Timeline(props) {
       .get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
       .then((res) => {
         setLinksList(res.data);
-        setCount(res.data[0].id);
+        setCount(res.data[0]?.id);
         setIsLoading(false);
       })
       .catch((err) => {
