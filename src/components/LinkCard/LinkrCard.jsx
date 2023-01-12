@@ -79,9 +79,7 @@ export default function LinkrCard({ card }) {
     <>
       <LinkCardStyle>
         <CardOptions>
-          <div className="user-picture">
-            <UserPicture userPictureUrl={userPictureUrl} />
-          </div>
+          <UserPicture userPictureUrl={userPictureUrl} size={"60px"} />
           <BoxLikes id={id} likes={likes} />
           <BoxIconComments
             id={id}

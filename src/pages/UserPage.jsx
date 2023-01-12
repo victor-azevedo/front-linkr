@@ -104,7 +104,10 @@ export default function UserPage(props) {
           {cards && (
             <>
               <div className="user-identification">
-                <UserPicture userPictureUrl={cards[0]?.userPictureUrl} />
+                <UserPicture
+                  userPictureUrl={cards[0]?.userPictureUrl}
+                  size={"60px"}
+                />
                 <p>{cards[0]?.username}'s posts </p>
               </div>
               {!handleMyPage() &&
