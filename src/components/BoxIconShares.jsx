@@ -4,37 +4,44 @@ import axios from "axios";
 import { useUserData } from "../hooks/useUserData";
 import { ReactComponent as ShareIcon } from "../assets/ShareIcon.svg";
 
-export default function BoxIconShares({ id, shares }) {
-
-  //cria função que envia um post com o id para ${URL}/linkrs/repost
+export default function BoxIconShares({ id, shares, setIsSharing, yesShare, setYesShare}) {
   const { userData } = useUserData();
-  const [isShared, setIsShared] = useState(false);
+
+  useEffect(() => {
+    if (yesShare === true) {
+      console.log("yesShare true");
+      const body = {postId: id,};
+
+      const promise = axios.post(
+        `${process.env.REACT_APP_BASE_URL}/linkrs/repost`,
+        body, userData?.requestConfig
+      );
+      promise.then((res) => {
+        setIsSharing(false);
+        alert("Re-posted");
+      });
+      promise.catch((erro) => {
+        console.log(erro.response.data);
+        if (erro.response.status === 401) {
+          alert("Acesso negado");
+        }
+      });
+      setIsSharing(false);
+      setYesShare(false);
+      window.location.reload();
+
+
+    } else {
+      console.log("yesShare false");
+    }
+  }, [yesShare]);
+
 
   function handleShareClick() {
-    const body = {
-      postId: id,
-    };
-
-    const promise = axios.post(
-      `${process.env.REACT_APP_BASE_URL}/linkrs/repost`,
-      body, userData?.requestConfig
-    );
-
-    promise.then((res) => {
-      setIsShared(true);
-      alert("Re-posted");
-    });
-    promise.catch((erro) => {
-      console.log(erro.response.data);
-      if (erro.response.status === 401) {
-        alert("Acesso negado");
-      }
-    }
-    );
+      setIsSharing(true);
   }
 
-
-  return (
+  return ( 
     <BoxSharesStyle>
       <StyledShareIcon onClick={()=> handleShareClick() }/>
       <SharesCount>{shares} re-post</SharesCount>

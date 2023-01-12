@@ -11,6 +11,7 @@ import BoxIconComments from "./BoxIconComments";
 import BoxIconShares from "./BoxIconShares";
 import RemoveIcon from "../assets/RemoveIcon.svg";
 import UserPicture from "./UserPicture";
+import AskIfWantRepost from "./AskIfWantRepost";
 
 import ModalConfirmationDelete from "./ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
@@ -41,6 +42,9 @@ export default function LinkrCard({
   const [commentsCountState, setCommentsCountState] = useState(commentsCount);
   const { repostsNumber } = repostsCount;
 
+  const [isSharing, setIsSharing] = useState(false);
+  const [yesShare, setYesShare] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -66,7 +70,8 @@ export default function LinkrCard({
       });
   }
 
-  return (
+  return isSharing ? (<AskIfWantRepost setIsSharing={setIsSharing} linkId={id} setYesShare={setYesShare}/>) :
+  (
     <>
       <LinkCardStyle>
         <CardOptions>
@@ -78,7 +83,7 @@ export default function LinkrCard({
             showComments={showComments}
             commentsCount={commentsCountState}
           />
-          <BoxIconShares id={id} shares={repostsNumber} />
+          <BoxIconShares id={id} shares={repostsNumber} setIsSharing={setIsSharing} yesShare={yesShare} setYesShare={setYesShare}/>
         </CardOptions>
         <div className="link-data">
           {userData?.username === username && (
