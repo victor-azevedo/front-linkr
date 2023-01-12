@@ -16,8 +16,6 @@ export default function Comments({
 }) {
   const { userData } = useUserData();
 
-  const followerId = 0;
-
   const [isLoading, setIsLoading] = useState(false);
   const [commentText, setCommentText] = useState("");
 
@@ -31,6 +29,7 @@ export default function Comments({
       )
       .then((res) => {
         setCommentsList(res.data);
+        setCommentsCountState(res.data.length);
       })
       .catch((err) => {
         alert(
@@ -87,11 +86,10 @@ export default function Comments({
           commenterPicture={c.commenterPicture}
           commenterId={c.commenterId}
           userOwnerId={userOwnerId}
-          followerId={followerId}
         />
       ))}
       <CommentEntry>
-        <UserPicture userPictureUrl={userData.pictureUrl} />
+        <UserPicture userPictureUrl={userData.pictureUrl} size={"50px"} />
         <BoxInput>
           <input
             onChange={(e) => setCommentText(e.target.value)}

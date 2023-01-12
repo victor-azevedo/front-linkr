@@ -11,6 +11,7 @@ import BoxIconComments from "./BoxIconComments";
 import BoxIconShares from "./BoxIconShares";
 import RemoveIcon from "../../assets/RemoveIcon.svg";
 import UserPicture from "../UserPicture";
+import AskIfWantRepost from "./AskIfWantRepost";
 
 import ModalConfirmationDelete from "../ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
@@ -37,6 +38,9 @@ export default function LinkrCard({ card }) {
 
   const [isTextEditable, setIsTextEditable] = useState(false);
   const [editTextInput, setEditTextInput] = useState(text);
+
+  const [isSharing, setIsSharing] = useState(false);
+  const [yesShare, setYesShare] = useState(false);
 
   const [showComments, setShowComments] = useState(false);
   const [commentsCountState, setCommentsCountState] = useState(commentsCount);
@@ -65,13 +69,17 @@ export default function LinkrCard({ card }) {
       });
   }
 
-  return (
+  return isSharing ? (
+    <AskIfWantRepost
+      setIsSharing={setIsSharing}
+      linkId={id}
+      setYesShare={setYesShare}
+    />
+  ) : (
     <>
       <LinkCardStyle>
         <CardOptions>
-          <div className="user-picture">
-            <UserPicture userPictureUrl={userPictureUrl} />
-          </div>
+          <UserPicture userPictureUrl={userPictureUrl} size={"60px"} />
           <BoxLikes id={id} likes={likes} />
           <BoxIconComments
             id={id}
@@ -79,7 +87,13 @@ export default function LinkrCard({ card }) {
             showComments={showComments}
             commentsCount={commentsCountState}
           />
-          <BoxIconShares id={id} shares={repostsNumber} />
+          <BoxIconShares
+            id={id}
+            shares={repostsNumber}
+            setIsSharing={setIsSharing}
+            yesShare={yesShare}
+            setYesShare={setYesShare}
+          />
         </CardOptions>
         <div className="link-data">
           {userData?.username === username && (
@@ -169,7 +183,7 @@ const CardOptions = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  .user-picture{
+  .user-picture {
     width: 50px;
     height: 50px;
   }
