@@ -68,6 +68,7 @@ export default function Header(props) {
                 <Suggestion
                   profileUrl={suggestion.pictureUrl}
                   username={suggestion.username}
+                                    isFollowing={suggestion.isFollowing}
                   id={suggestion.id}
                   key={suggestion.id}
                 />

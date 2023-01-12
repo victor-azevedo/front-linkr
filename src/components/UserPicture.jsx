@@ -8,11 +8,13 @@ export default function UserPicture({ userPictureUrl }) {
   );
 }
 const UserPictureStyle = styled.div`
-  height: 50px;
-  width: 50px;
+  height: 100%;
+  width: 100%;
+  max-width: 50px;
+  max-height: 50px;
   img {
-    height: 50px;
-    width: 50px;
+    height: 100%;
+    width: 100%;
     border-radius: 50%;
     object-fit: cover;
   }

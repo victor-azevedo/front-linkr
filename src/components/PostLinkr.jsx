@@ -47,7 +47,9 @@ export default function PostLinkr({ userPictureUrl }) {
   }
   return (
     <PostLinkrStyle>
-      <UserPicture userPictureUrl={userPictureUrl} />
+      <div className="user-picture">
+        <UserPicture userPictureUrl={userPictureUrl} />
+      </div>
       <div className="post-data">
         <p>What are you going to share today?</p>
         <Form onSubmit={publishLink}>
@@ -96,6 +98,10 @@ const PostLinkrStyle = styled.div`
     font-size: 20px;
     line-height: 24px;
     font-weight: 300;
+  }
+  .user-picture{
+    width: 50px;
+    height: 50px;
   }
 `;
 
