@@ -89,7 +89,7 @@ export default function Comments({
         />
       ))}
       <CommentEntry>
-        <UserPicture userPictureUrl={userData.pictureUrl} />
+        <UserPicture userPictureUrl={userData.pictureUrl} size={"50px"} />
         <BoxInput>
           <input
             onChange={(e) => setCommentText(e.target.value)}

@@ -18,7 +18,7 @@ export default function Comment({
 
   return (
     <CommentStyle>
-      <UserPicture userPictureUrl={commenterPicture} />
+      <UserPicture userPictureUrl={commenterPicture} size={"50px"} />
       <div className="box-texts">
         <CommenterName>{commenterName}</CommenterName>
         {Number(commenterId) === Number(userOwnerId) ? (
