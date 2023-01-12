@@ -5,12 +5,13 @@ import ImageUpDate from "../assets/ImageUpDate.svg";
 import useInterval from "use-interval";
 import axios from "axios";
 
-export default function UpDatePost({ linksList }) {
+export default function UpDatePost( {count} ) {
     const { userData } = useUserData();
     const [contNewPost, setContNewPost] = useState(0);
     const [newPost, setNewPost] = useState([])
-    const countPost = linksList.length;
-    console.log("tinha", countPost)
+    /* const [count, setCount] = useState(0) */
+    
+    console.log("tinha  ",count)
     const [contador, setContador] = useState(0)
 
 
@@ -18,27 +19,26 @@ export default function UpDatePost({ linksList }) {
         window.location.reload(true);
     }
 
-    const [count, setCount] = useState(0)    
-  
     useInterval(
       () => {
         axios.get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
         .then((res) => {
           setNewPost(res.data);
-          setContNewPost(newPost.length)
-          console.log("tem agora" ,newPost.length)
+          setContNewPost(newPost[0].id)
+          console.log("tem agora" , contNewPost)
+          
         })
         .catch((err) => {
             console.log("errooo");
         }) 
-        
-      },1000)
+        setContador(contNewPost - count)
+      },15000)
   
    
-    if (countPost >= contNewPost) return null;
+    if (count >= contNewPost) return null;
     else {
         return (
-            <NewPostButton onClick={() => renderNewPost(linksList)}>
+            <NewPostButton onClick={() => renderNewPost()}>
                 {contador} new posts, load more!
                 <img src={ImageUpDate}
                     alt="icon upDate" />
