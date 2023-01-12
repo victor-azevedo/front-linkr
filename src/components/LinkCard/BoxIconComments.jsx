@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as CommentsIcon } from "../assets/CommentsIcon.svg";
+import { ReactComponent as CommentsIcon } from "../../assets/CommentsIcon.svg";
 
 export default function BoxIconComments({
   id,

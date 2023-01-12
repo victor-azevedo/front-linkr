@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
-import LinkCard from "../components/LinkrCard";
+import RenderCards from "../components/RenderCards";
 import PostLinkr from "../components/PostLinkr";
 import Trending from "../components/Trending";
 import UpDatePost from "../components/upDateLikr";
@@ -20,7 +20,7 @@ export default function Timeline(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [linksList, setLinksList] = useState([]);
   const [followersList, setFollowersList] = useState([]);
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   if (!userData) {
     navigate("/");
   }
@@ -31,7 +31,7 @@ export default function Timeline(props) {
       .get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
       .then((res) => {
         setLinksList(res.data);
-        setCount(res.data[0].id)
+        setCount(res.data[0].id);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -53,39 +53,6 @@ export default function Timeline(props) {
     //eslint-disable-next-line
   }, []);
 
-  console.log(linksList)
-
-  function renderLinks() {
-    if (!linksList) {
-      return (
-        <p>
-          {followersList.length === 0
-            ? "You don't follow anyone yet. Search for new friends!"
-            : "No posts found from your friends"}
-        </p>
-      );
-    } else {
-      return linksList.map((link) => {
-
-        return (
-          <LinkCard
-            key={link.id}
-            id={link.id}
-            username={link.username}
-            userPictureUrl={link.userPictureUrl}
-            link={link.linkUrl}
-            text={link.text}
-            linkMetadata={link.linkMetadata}
-            likes={link.likes}
-            userId={link.userId}
-            commentsCount={link.commentsCount}
-            repostsCount={link}
-          />
-        );
-      });
-    }
-  }
-
   return (
     <>
       <Header userPictureUrl={userData?.pictureUrl} />
@@ -94,8 +61,8 @@ export default function Timeline(props) {
           <h2>timeline</h2>
           <Cards>
             <PostLinkr userPictureUrl={userData?.pictureUrl} />
-            <UpDatePost count={count}/>
-            {renderLinks()}
+            <UpDatePost count={count} />
+            <RenderCards cards={linksList} followersList={followersList} />
             {isLoading ? <Loading>Loading...</Loading> : null}
           </Cards>
         </TimelineStyle>

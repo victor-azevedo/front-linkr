@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useUserData } from "../hooks/useUserData";
-import { ReactComponent as ShareIcon } from "../assets/ShareIcon.svg";
+import { useUserData } from "../../hooks/useUserData";
+import { ReactComponent as ShareIcon } from "../../assets/ShareIcon.svg";
 
 export default function BoxIconShares({ id, shares }) {
-
   //cria função que envia um post com o id para ${URL}/linkrs/repost
   const { userData } = useUserData();
   const [isShared, setIsShared] = useState(false);
@@ -17,7 +16,8 @@ export default function BoxIconShares({ id, shares }) {
 
     const promise = axios.post(
       `${process.env.REACT_APP_BASE_URL}/linkrs/repost`,
-      body, userData?.requestConfig
+      body,
+      userData?.requestConfig
     );
 
     promise.then((res) => {
@@ -29,14 +29,12 @@ export default function BoxIconShares({ id, shares }) {
       if (erro.response.status === 401) {
         alert("Acesso negado");
       }
-    }
-    );
+    });
   }
-
 
   return (
     <BoxSharesStyle>
-      <StyledShareIcon onClick={()=> handleShareClick() }/>
+      <StyledShareIcon onClick={() => handleShareClick()} />
       <SharesCount>{shares} re-post</SharesCount>
     </BoxSharesStyle>
   );

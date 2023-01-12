@@ -5,30 +5,32 @@ import axios from "axios";
 import styled from "styled-components";
 import { ReactTagify } from "react-tagify";
 
-import EditIcon from "../assets/EditIcon.svg";
+import EditIcon from "../../assets/EditIcon.svg";
 import BoxLikes from "./BoxLikes";
 import BoxIconComments from "./BoxIconComments";
 import BoxIconShares from "./BoxIconShares";
-import RemoveIcon from "../assets/RemoveIcon.svg";
-import UserPicture from "./UserPicture";
+import RemoveIcon from "../../assets/RemoveIcon.svg";
+import UserPicture from "../UserPicture";
 
-import ModalConfirmationDelete from "./ModalConfirmationDelete";
+import ModalConfirmationDelete from "../ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
-import { useUserData } from "../hooks/useUserData";
+import { useUserData } from "../../hooks/useUserData";
 import Comments from "./Comments";
 
-export default function LinkrCard({
-  id,
-  username,
-  userPictureUrl,
-  link,
-  text,
-  linkMetadata,
-  likes,
-  userId,
-  commentsCount,
-  repostsCount,
-}) {
+export default function LinkrCard({ card }) {
+  const {
+    id,
+    username,
+    userPictureUrl,
+    link,
+    text,
+    linkMetadata,
+    likes,
+    userId,
+    commentsCount,
+    repostsNumber,
+  } = card;
+
   const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -38,8 +40,6 @@ export default function LinkrCard({
 
   const [showComments, setShowComments] = useState(false);
   const [commentsCountState, setCommentsCountState] = useState(commentsCount);
-  const { repostsNumber } = repostsCount;
-
 
   const navigate = useNavigate();
 

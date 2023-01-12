@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import UserPicture from "./UserPicture";
+import UserPicture from "./../UserPicture";
 
 export default function Comment({
   commentText,
