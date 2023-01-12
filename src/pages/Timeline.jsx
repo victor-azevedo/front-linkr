@@ -7,6 +7,7 @@ import RenderCards from "../components/RenderCards";
 import PostLinkr from "../components/PostLinkr";
 import Trending from "../components/Trending";
 import UpDatePost from "../components/upDateLikr";
+import InfiniteScroll from "react-infinite-scroller";
 
 import { useUserData } from "../hooks/useUserData";
 
@@ -53,6 +54,10 @@ export default function Timeline(props) {
     //eslint-disable-next-line
   }, []);
 
+  function loadFunc(params) {
+    console.log(params);
+  }
+
   return (
     <>
       <Header userPictureUrl={userData?.pictureUrl} />
@@ -62,8 +67,15 @@ export default function Timeline(props) {
           <Cards>
             <PostLinkr userPictureUrl={userData?.pictureUrl} />
             <UpDatePost count={count} />
-            <RenderCards cards={linksList} followersList={followersList} />
-            {isLoading ? <Loading>Loading...</Loading> : null}
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={loadFunc}
+              hasMore={false}
+              loader={<Loading>Loading...</Loading>}
+            >
+              <RenderCards cards={linksList} followersList={followersList} />
+            </InfiniteScroll>
+            {/* {isLoading ? <Loading>Loading...</Loading> : null} */}
           </Cards>
         </TimelineStyle>
         <div className="trending-hashtags">
@@ -112,4 +124,6 @@ const Cards = styled.div`
 const Loading = styled.p`
   font-family: "Oswald", sans-serif;
   font-size: 28px;
+  text-align: center;
+  padding: 20px;
 `;
