@@ -68,7 +68,7 @@ export default function Header(props) {
                 <Suggestion
                   profileUrl={suggestion.pictureUrl}
                   username={suggestion.username}
-                                    isFollowing={suggestion.isFollowing}
+                  isFollowing={suggestion.isFollowing}
                   id={suggestion.id}
                   key={suggestion.id}
                 />
@@ -78,7 +78,7 @@ export default function Header(props) {
       </SearchBar>
       <BoxMenu onClick={showHideMenu}>
         {isMenuOpen ? <StyledCloseMenuIcon /> : <StyledOpenMenuIcon />}
-        <UserPicture userPictureUrl={userData?.pictureUrl} />
+        <UserPicture userPictureUrl={userData?.pictureUrl} size={"55px"} />
         {isMenuOpen ? <MenuLogout setIsMenuOpen={setIsMenuOpen} /> : null}
       </BoxMenu>
       {}
