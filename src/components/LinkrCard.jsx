@@ -26,6 +26,7 @@ export default function LinkrCard({
   linkMetadata,
   likes,
   userId,
+  commentsCount,
 }) {
   console.log(userId);
   const { userData } = useUserData();
@@ -36,6 +37,7 @@ export default function LinkrCard({
   const [editTextInput, setEditTextInput] = useState(text);
 
   const [showComments, setShowComments] = useState(false);
+  const [commentsCountState, setCommentsCountState] = useState(commentsCount);
 
   const navigate = useNavigate();
 
@@ -71,8 +73,9 @@ export default function LinkrCard({
             id={id}
             setShowComments={setShowComments}
             showComments={showComments}
+            commentsCount={commentsCountState}
           />
-          <BoxIconShares id={id}/>
+          <BoxIconShares id={id} />
         </CardOptions>
         <div className="link-data">
           {userData?.username === username && (
@@ -102,10 +105,11 @@ export default function LinkrCard({
               text={text}
             />
           ) : (
-            <ReactTagify 
-            colors={"white"} 
-            tagClicked={(tag)=> navigate(`/hashtag/${tag.replace("#","")}`)}>
-            <Text>{editTextInput}</Text>
+            <ReactTagify
+              colors={"white"}
+              tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
+            >
+              <Text>{editTextInput}</Text>
             </ReactTagify>
           )}
           <Link href={link} target="blank">
@@ -125,9 +129,15 @@ export default function LinkrCard({
             setModalConfirmation={setModalConfirmation}
             handleCardRemoval={handleCardRemoval}
           />
-        ) }
+        )}
       </LinkCardStyle>
-      {showComments && <Comments linkId={id} userOwner={userId} />}
+      {showComments && (
+        <Comments
+          linkId={id}
+          userOwner={userId}
+          setCommentsCountState={setCommentsCountState}
+        />
+      )}
     </>
   );
 }
