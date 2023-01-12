@@ -18,10 +18,7 @@ export default function Header(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const { userData } = useUserData();
-    const searchBarRef = useRef(null);
     const navigate = useNavigate();
-
-    console.log(searchBarRef.current);
 
     useEffect(() => {
         if (userQuery.length === 0) {

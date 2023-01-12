@@ -18,6 +18,7 @@ export default function Timeline(props) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [linksList, setLinksList] = useState([]);
+  const [followersList, setFollowersList] = useState([]);
 
   if (!userData) {
     navigate("/");
@@ -38,14 +39,29 @@ export default function Timeline(props) {
         setIsLoading(false);
         navigate("/");
       });
+
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/follows`, userData?.requestConfig)
+      .then((res) => {
+        setFollowersList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //eslint-disable-next-line
   }, []);
 
   console.log(linksList)
 
-
   function renderLinks() {
     if (!linksList) {
-      return <p>There are no posts yet</p>;
+      return (
+        <p>
+          {followersList.length === 0
+            ? "You don't follow anyone yet. Search for new friends!"
+            : "No posts found from your friends"}
+        </p>
+      );
     } else {
       return linksList.map((link) => {
 

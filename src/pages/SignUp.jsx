@@ -97,7 +97,7 @@ export default function SignUp(props) {
               Sign Up{" "}
             </button>
             <Link to="/">
-              <a>Switch back to log in</a>
+              <p>Switch back to log in</p>
             </Link>
           </form>
         </SideRight>
@@ -167,7 +167,7 @@ const SideRight = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    a {
+    p {
       color: white;
       font-family: "Lato", sans-serif;
       font-style: normal;
