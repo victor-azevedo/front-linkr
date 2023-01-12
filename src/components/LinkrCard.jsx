@@ -27,7 +27,7 @@ export default function LinkrCard({
   likes,
   userId,
   commentsCount,
-  repostsCount,
+  repostsCount = {},
 }) {
   const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
@@ -38,7 +38,7 @@ export default function LinkrCard({
 
   const [showComments, setShowComments] = useState(false);
   const [commentsCountState, setCommentsCountState] = useState(commentsCount);
-  const { repostsNumber } = repostsCount;
+  const { repostsNumber = null } = repostsCount;
 
 
   const navigate = useNavigate();
