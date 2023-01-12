@@ -39,13 +39,13 @@ export default function Timeline(props) {
         navigate("/");
       });
   }, []);
-  console.log(linksList)
 
   function renderLinks() {
     if (!linksList) {
       return <p>There are no posts yet</p>;
     } else {
       return linksList.map((link) => {
+
         return (
           <LinkCard
             key={link.id}
@@ -57,6 +57,8 @@ export default function Timeline(props) {
             linkMetadata={link.linkMetadata}
             likes={link.likes}
             userId={link.userId}
+            commentsCount={link.commentsCount}
+            repostsCount={link}
           />
         );
       });
