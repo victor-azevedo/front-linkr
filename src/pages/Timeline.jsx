@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import LinkCard from "../components/LinkrCard";
 import PostLinkr from "../components/PostLinkr";
 import Trending from "../components/Trending";
+import UpDatePost from "../components/upDateLikr";
 
 import { useUserData } from "../hooks/useUserData";
 
@@ -19,7 +20,7 @@ export default function Timeline(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [linksList, setLinksList] = useState([]);
   const [followersList, setFollowersList] = useState([]);
-
+  const [count, setCount] = useState(0)
   if (!userData) {
     navigate("/");
   }
@@ -30,6 +31,7 @@ export default function Timeline(props) {
       .get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
       .then((res) => {
         setLinksList(res.data);
+        setCount(res.data[0].id)
         setIsLoading(false);
       })
       .catch((err) => {
@@ -92,6 +94,7 @@ export default function Timeline(props) {
           <h2>timeline</h2>
           <Cards>
             <PostLinkr userPictureUrl={userData?.pictureUrl} />
+            <UpDatePost count={count}/>
             {renderLinks()}
             {isLoading ? <Loading>Loading...</Loading> : null}
           </Cards>
