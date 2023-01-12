@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import LinkCard from "./LinkCard/LinkrCard";
 
 export default function RenderCards({ cards, followersList }) {
@@ -15,5 +16,13 @@ export default function RenderCards({ cards, followersList }) {
     }
   }
 
-  return <>{renderLinks()}</>;
+  return <Cards>{renderLinks()}</Cards>;
 }
+
+const Cards = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 43px;
+`;
