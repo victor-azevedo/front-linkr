@@ -9,11 +9,7 @@ export default function UpDatePost( {count} ) {
     const { userData } = useUserData();
     const [contNewPost, setContNewPost] = useState(0);
     const [newPost, setNewPost] = useState([])
-    /* const [count, setCount] = useState(0) */
-    
-    console.log("tinha  ",count)
     const [contador, setContador] = useState(0)
-
 
     function renderNewPost() {
         window.location.reload(true);
@@ -24,14 +20,12 @@ export default function UpDatePost( {count} ) {
         axios.get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
         .then((res) => {
           setNewPost(res.data);
-          setContNewPost(newPost[0].id)
-          console.log("tem agora" , contNewPost)
-          
+          setContNewPost(newPost[0].id)          
         })
         .catch((err) => {
-            console.log("errooo");
+            console.log(err);
         }) 
-        setContador(contNewPost - count)
+        setContador(newPost[0].id - count)
       },15000)
   
    
