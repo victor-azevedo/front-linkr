@@ -40,6 +40,9 @@ export default function Timeline(props) {
       });
   }, []);
 
+  console.log(linksList)
+
+
   function renderLinks() {
     if (!linksList) {
       return <p>There are no posts yet</p>;
