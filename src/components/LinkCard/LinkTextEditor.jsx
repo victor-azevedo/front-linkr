@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import axios from "axios";
 import styled from "styled-components";
-import { useUserData } from "../hooks/useUserData";
+import { useUserData } from "../../hooks/useUserData";
 
 export default function LinkTextEditor({
   setEditTextInput,

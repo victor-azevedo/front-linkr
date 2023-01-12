@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-import { useUserData } from "../hooks/useUserData";
+import { useUserData } from "../../hooks/useUserData";
 
 import Comment from "./Comment";
 
-import UserPicture from "./UserPicture";
-import { ReactComponent as SendCommentIcon } from "../assets/SendCommentIcon.svg";
+import UserPicture from "./../UserPicture";
+import { ReactComponent as SendCommentIcon } from "../../assets/SendCommentIcon.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
