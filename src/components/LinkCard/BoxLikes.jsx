@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import { ReactComponent as UnlikeIcon } from "../assets/HeartIcon.svg";
-import { ReactComponent as LikedIcon } from "../assets/HeartIconFilled.svg";
+import { ReactComponent as UnlikeIcon } from "../../assets/HeartIcon.svg";
+import { ReactComponent as LikedIcon } from "../../assets/HeartIconFilled.svg";
 
 import { Tooltip } from "react-tooltip";
-import "../../node_modules/react-tooltip/dist/react-tooltip.css";
+import "../../../node_modules/react-tooltip/dist/react-tooltip.css";
 
-import { useUserData } from "../hooks/useUserData";
+import { useUserData } from "../../hooks/useUserData";
 
 export default function BoxLikes({ id, likes }) {
   const { userData } = useUserData();
@@ -63,7 +63,10 @@ export default function BoxLikes({ id, likes }) {
         });
     } else {
       axios
-        .delete(`${process.env.REACT_APP_BASE_URL}/linkrs/like/${id}`, userData?.requestConfig)
+        .delete(
+          `${process.env.REACT_APP_BASE_URL}/linkrs/like/${id}`,
+          userData?.requestConfig
+        )
         .then((res) => {
           setIsLiked(!isLiked);
           setLikesCount(likesCount - 1);

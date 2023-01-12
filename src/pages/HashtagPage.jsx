@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../components/Header";
-import LinkCard from "../components/LinkrCard";
 import Trending from "../components/Trending";
 import { useUserData } from "../hooks/useUserData";
+import RenderCards from "../components/RenderCards";
 
 export default function HashtagPage() {
   const { userData } = useUserData();
@@ -18,15 +18,15 @@ export default function HashtagPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [linkrs, setLinkrs] = useState(null);
 
-  console.log(linkrs);
-
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/hashtag/${hashtag}`, userData.requestConfig)
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/hashtag/${hashtag}`,
+        userData.requestConfig
+      )
       .then((res) => {
         setLinkrs([...res.data]);
-        console.log("RESPOSTA: ", res.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -40,32 +40,18 @@ export default function HashtagPage() {
   return (
     <>
       <Header />
-    <Page>
-      <Container>
-        <Title>
-          # <span>{hashtag}</span>
-        </Title>
-        <LinkrsandHashtags>
-          <Linkrs>
-                    {linkrs && linkrs.map((linkr) => (
-                        <LinkCard
-                            key={linkr.id}
-                            id={linkr.id}
-                            username={linkr.username}
-                            userPictureUrl={linkr.pictureUrl}
-                            link={linkr.linkUrl}
-                            text={linkr.text}
-                            linkMetadata={linkr.linkMetadata}
-                            likes={linkr.likes}
-                            userId={linkr.userId}
-                        />
-                    ))}
-                </Linkrs>
-          <Trending />
-          <Hashtags></Hashtags>
-        </LinkrsandHashtags>
-      </Container>
-    </Page>
+      <Page>
+        <Container>
+          <Title>
+            # <span>{hashtag}</span>
+          </Title>
+          <LinkrsandHashtags>
+            <Linkrs>{linkrs && <RenderCards cards={linkrs} />}</Linkrs>
+            <Trending />
+            <Hashtags></Hashtags>
+          </LinkrsandHashtags>
+        </Container>
+      </Page>
     </>
   );
 }
@@ -105,7 +91,7 @@ const Linkrs = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  > *{
+  > * {
     margin-bottom: 20px;
   }
 `;
