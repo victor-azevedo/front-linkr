@@ -135,9 +135,11 @@ const Form = styled.form`
 `;
 
 const InputLink = styled.input`
+  text-indent: 0.5rem;
   height: 30px;
 `;
 
 const InputText = styled.input`
+  text-indent: 0.5rem;
   height: 66px;
 `;

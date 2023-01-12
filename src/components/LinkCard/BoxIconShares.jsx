@@ -15,7 +15,6 @@ export default function BoxIconShares({
 
   useEffect(() => {
     if (yesShare === true) {
-      console.log("yesShare true");
       const body = { postId: id };
 
       const promise = axios.post(
@@ -26,18 +25,18 @@ export default function BoxIconShares({
       promise.then((res) => {
         setIsSharing(false);
         alert("Re-posted");
+        window.location.reload();
       });
       promise.catch((erro) => {
         console.log(erro.response.data);
         if (erro.response.status === 401) {
-          alert("Acesso negado");
+          alert(erro.response.data);
         }
       });
       setIsSharing(false);
       setYesShare(false);
-      window.location.reload();
+      
     } else {
-      console.log("yesShare false");
     }
   }, [yesShare]);
 

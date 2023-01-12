@@ -17,6 +17,7 @@ import ModalConfirmationDelete from "../ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
 import { useUserData } from "../../hooks/useUserData";
 import Comments from "./Comments";
+import RepostedBy from "./RepostedBy";
 
 export default function LinkrCard({ card }) {
   const {
@@ -30,6 +31,7 @@ export default function LinkrCard({ card }) {
     userId,
     commentsCount,
     repostsNumber,
+    reposter,
   } = card;
 
   const { userData } = useUserData();
@@ -69,14 +71,21 @@ export default function LinkrCard({ card }) {
       });
   }
 
-  return isSharing ? (
-    <AskIfWantRepost
+  return (
+    <ExtendedLinkrCard>
+      {reposter && <RepostedBy repostedBy={reposter} />}
+      {modalConfirmation && (
+          <ModalConfirmationDelete
+            modalLoading={modalLoading}
+            setModalConfirmation={setModalConfirmation}
+            handleCardRemoval={handleCardRemoval}
+          />
+        )}
+        {isSharing && (<AskIfWantRepost
       setIsSharing={setIsSharing}
       linkId={id}
       setYesShare={setYesShare}
-    />
-  ) : (
-    <>
+    />)}
       <LinkCardStyle>
         <CardOptions>
           <UserPicture userPictureUrl={userPictureUrl} size={"60px"} />
@@ -141,13 +150,6 @@ export default function LinkrCard({ card }) {
             </LinkImage>
           </Link>
         </div>
-        {modalConfirmation && (
-          <ModalConfirmationDelete
-            modalLoading={modalLoading}
-            setModalConfirmation={setModalConfirmation}
-            handleCardRemoval={handleCardRemoval}
-          />
-        )}
       </LinkCardStyle>
       {showComments && (
         <Comments
@@ -156,9 +158,17 @@ export default function LinkrCard({ card }) {
           setCommentsCountState={setCommentsCountState}
         />
       )}
-    </>
+    </ExtendedLinkrCard>
   );
 }
+
+const ExtendedLinkrCard = styled.div`
+  width: 100%;
+  min-height: 276px;
+  display: flex;
+  flex-direction: column;
+
+`
 
 const LinkCardStyle = styled.div`
   width: 100%;
