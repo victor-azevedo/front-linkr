@@ -6,14 +6,33 @@ import Comment from "./Comment";
 
 import UserPicture from "./UserPicture";
 import { ReactComponent as SendCommentIcon } from "../assets/SendCommentIcon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Comments({ linkId, userOwner }) {
+export default function Comments({ linkId, userOwner, setCommentsCountState }) {
   const { userData } = useUserData();
 
   const [isLoading, setIsLoading] = useState(false);
   const [commentText, setCommentText] = useState("");
+
+  const [commentsList, setCommentsList] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/comments/linkr/${linkId}`,
+        userData?.requestConfig
+      )
+      .then((res) => {
+        setCommentsList(res.data);
+      })
+      .catch((err) => {
+        alert(
+          "An error occurred while trying to fetch the comments, please refresh the page"
+        );
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function sendComment() {
     if (commentText.length < 3) {
@@ -23,20 +42,27 @@ export default function Comments({ linkId, userOwner }) {
 
     setIsLoading(true);
     const body = {
-      commenterId: userData?.id,
       commentText,
     };
 
-    console.log(body);
-
     axios
       .post(
-        `${process.env.REACT_APP_BASE_URL}/comments/${linkId}`,
+        `${process.env.REACT_APP_BASE_URL}/comments/linkr/${linkId}`,
         body,
         userData?.requestConfig
       )
       .then((res) => {
         setIsLoading(false);
+        const newCommentsList = [
+          {
+            commentText,
+            commenterName: userData.username,
+            commenterPicture: userData.pictureUrl,
+          },
+          ...commentsList,
+        ];
+        setCommentsList([...newCommentsList]);
+        setCommentsCountState(newCommentsList.length);
         setCommentText("");
       })
       .catch((err) => {
@@ -47,8 +73,14 @@ export default function Comments({ linkId, userOwner }) {
 
   return (
     <CommentsStyle>
-      <Comment />
-      <Comment />
+      {commentsList.map((c, index) => (
+        <Comment
+          key={index}
+          commentText={c.commentText}
+          commenterName={c.commenterName}
+          commenterPicture={c.commenterPicture}
+        />
+      ))}
       <CommentEntry>
         <UserPicture userPictureUrl={userData.pictureUrl} />
         <BoxInput>
@@ -59,6 +91,10 @@ export default function Comments({ linkId, userOwner }) {
             placeholder="write a comment..."
             name="comment"
             type="text"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") sendComment();
+            }}
+            tabIndex={-1}
             required
           ></input>
           <StyledSendCommentIcon onClick={sendComment} />
