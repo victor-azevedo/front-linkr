@@ -37,6 +37,7 @@ export default function LinkrCard({
   const [editTextInput, setEditTextInput] = useState(text);
 
   const [showComments, setShowComments] = useState(false);
+  const [commentsCountState, setCommentsCountState] = useState(commentsCount);
 
   const navigate = useNavigate();
 
@@ -72,7 +73,7 @@ export default function LinkrCard({
             id={id}
             setShowComments={setShowComments}
             showComments={showComments}
-            commentsCount={commentsCount}
+            commentsCount={commentsCountState}
           />
           <BoxIconShares id={id} />
         </CardOptions>
@@ -130,7 +131,13 @@ export default function LinkrCard({
           />
         )}
       </LinkCardStyle>
-      {showComments && <Comments linkId={id} userOwner={userId} />}
+      {showComments && (
+        <Comments
+          linkId={id}
+          userOwner={userId}
+          setCommentsCountState={setCommentsCountState}
+        />
+      )}
     </>
   );
 }

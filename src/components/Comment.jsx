@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-import { useUserData } from "../hooks/useUserData";
-
 import UserPicture from "./UserPicture";
 
-export default function Comment({ props }) {
-  const { userData } = useUserData();
-
+export default function Comment({
+  commentText,
+  commenterName,
+  commenterPicture,
+}) {
   return (
     <CommentStyle>
-      <UserPicture userPictureUrl={userData.pictureUrl} />
+      <UserPicture userPictureUrl={commenterPicture} />
       <div className="box-texts">
-        <CommenterName>{userData.username}</CommenterName>
-        <CommentText>teste comentario</CommentText>
+        <CommenterName>{commenterName}</CommenterName>
+        <CommentText>{commentText}</CommentText>
       </div>
     </CommentStyle>
   );
