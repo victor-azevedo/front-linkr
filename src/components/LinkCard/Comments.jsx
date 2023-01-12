@@ -31,6 +31,7 @@ export default function Comments({
       )
       .then((res) => {
         setCommentsList(res.data);
+        setCommentsCountState(res.data.length);
       })
       .catch((err) => {
         alert(
