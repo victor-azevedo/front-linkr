@@ -121,7 +121,7 @@ const CommentsStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  translate: 0 -35px;
+  translate: 0 -25px;
   z-index: 1;
 `;
 
