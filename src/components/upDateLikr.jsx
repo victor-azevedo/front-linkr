@@ -8,11 +8,10 @@ import { useUserData } from "../hooks/useUserData";
 
 import ImageUpDate from "../assets/ImageUpDate.svg";
 
-export default function UpDatePost({ count }) {
+export default function UpDatePost({ lastPostId }) {
   const { userData } = useUserData();
-  const [contNewPost, setContNewPost] = useState(0);
-  const [newPost, setNewPost] = useState([]);
-  const [contador, setContador] = useState(0);
+
+  const [newLastPostId, setNewLastPostId] = useState(lastPostId);
 
   function renderNewPost() {
     window.location.reload(true);
@@ -20,26 +19,30 @@ export default function UpDatePost({ count }) {
 
   useInterval(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/linkrs?limit=1`,
+        userData?.requestConfig
+      )
       .then((res) => {
-        setNewPost(res.data);
-        setContNewPost(newPost[0]?.id);
+        console.log(res.data);
+        setNewLastPostId(res.data[0]?.id);
       })
       .catch((err) => {
         console.log(err);
       });
-    setContador(newPost[0]?.id - count);
   }, 15000);
 
-  if (count >= contNewPost) return null;
-  else {
-    return (
-      <NewPostButton onClick={() => renderNewPost()}>
-        {contador} new posts, load more!
-        <img src={ImageUpDate} alt="icon upDate" />
-      </NewPostButton>
-    );
-  }
+  console.log(newLastPostId);
+  console.log(lastPostId);
+
+  if (!newLastPostId || Number(newLastPostId) <= Number(lastPostId))
+    return null;
+  return (
+    <NewPostButton onClick={() => renderNewPost()}>
+      {newLastPostId - lastPostId} new posts, load more!
+      <img src={ImageUpDate} alt="icon upDate" />
+    </NewPostButton>
+  );
 }
 
 const NewPostButton = styled.div`

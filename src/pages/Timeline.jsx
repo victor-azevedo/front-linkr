@@ -69,7 +69,7 @@ export default function Timeline(props) {
           <h2>timeline</h2>
           <Cards>
             <PostLinkr userPictureUrl={userData?.pictureUrl} />
-            <UpDatePost count={count} />
+            <UpDatePost lastPostId={linksList[0]?.id} />
             <InfiniteScroll
               pageStart={0}
               loadMore={loadFunc}
