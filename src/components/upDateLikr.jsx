@@ -24,16 +24,12 @@ export default function UpDatePost({ lastPostId }) {
         userData?.requestConfig
       )
       .then((res) => {
-        console.log(res.data);
         setNewLastPostId(res.data[0]?.id);
       })
       .catch((err) => {
         console.log(err);
       });
   }, 15000);
-
-  console.log(newLastPostId);
-  console.log(lastPostId);
 
   if (!newLastPostId || Number(newLastPostId) <= Number(lastPostId))
     return null;
