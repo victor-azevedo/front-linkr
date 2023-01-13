@@ -1,13 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+
 import styled from "styled-components";
+import axios from "axios";
 
 import { useUserData } from "../../hooks/useUserData";
 
-import Comment from "./Comment";
-
 import UserPicture from "./../UserPicture";
+import Comment from "./Comment";
 import { ReactComponent as SendCommentIcon } from "../../assets/SendCommentIcon.svg";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function Comments({
   linkId,
@@ -36,7 +37,6 @@ export default function Comments({
           "An error occurred while trying to fetch the comments, please refresh the page"
         );
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function sendComment() {
@@ -140,7 +140,7 @@ const BoxInput = styled.form`
   input {
     width: 100%;
     height: 39px;
-    font-family: "Lato";
+    font-family: "Lato", sans-serif;
     font-style: italic;
     font-weight: 400;
     font-size: 14px;

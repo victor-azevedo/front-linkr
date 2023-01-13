@@ -1,23 +1,27 @@
-import styled from "styled-components";
-import UserPicture from "./UserPicture";
-import { DebounceInput } from "react-debounce-input";
-import { useEffect, useRef, useState } from "react";
-import SearchIcon from "../assets/SearchIcon.svg";
-import MenuLogout from "./MenuLogout";
-import Suggestion from "./Suggestion";
-import axios from "axios";
-import { useUserData } from "../hooks/useUserData";
-
-import { ReactComponent as OpenMenuIcon } from "../assets/OpenMenuIcon.svg";
-import { ReactComponent as CloseMenuIcon } from "../assets/CloseMenuIcon.svg";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Header(props) {
+import axios from "axios";
+import styled from "styled-components";
+import { DebounceInput } from "react-debounce-input";
+
+import { useUserData } from "../hooks/useUserData";
+
+import UserPicture from "./UserPicture";
+import Suggestion from "./Suggestion";
+import MenuLogout from "./MenuLogout";
+
+import SearchIcon from "../assets/SearchIcon.svg";
+import { ReactComponent as OpenMenuIcon } from "../assets/OpenMenuIcon.svg";
+import { ReactComponent as CloseMenuIcon } from "../assets/CloseMenuIcon.svg";
+
+export default function Header() {
+  const { userData } = useUserData();
   const [userQuery, setUserQuery] = useState("");
   const [suggestions, setSuggestions] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { userData } = useUserData();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -101,10 +105,12 @@ const HeaderStyle = styled.div`
 const Logo = styled.div`
   font-family: "Passion One", cursive;
   font-size: 49px;
+  cursor: pointer;
 `;
 
 const SearchBar = styled.div`
-  width: 563px;
+  width: 50%;
+  max-width: 563px;
   height: 45px;
   background-color: #e7e7e7;
   border-radius: 8px;
@@ -135,6 +141,7 @@ const SearchBar = styled.div`
       align-items: center;
       width: 32px;
       height: 32px;
+      cursor: pointer;
     }
   }
   .suggestions {

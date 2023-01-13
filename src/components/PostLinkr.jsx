@@ -4,17 +4,17 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import styled from "styled-components";
 
-import UserPicture from "./UserPicture";
 import { useUserData } from "../hooks/useUserData";
+import UserPicture from "./UserPicture";
 
-export default function PostLinkr({ userPictureUrl }) {
+export default function PostLinkr() {
+  const { userData } = useUserData();
+
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     link: "",
     text: "",
   });
-
-  const { userData } = useUserData();
 
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ export default function PostLinkr({ userPictureUrl }) {
   }
   return (
     <PostLinkrStyle>
-      <UserPicture userPictureUrl={userPictureUrl} size={"50px"} />
+      <UserPicture userPictureUrl={userData?.pictureUrl} size={"55px"} />
       <div className="post-data">
         <p>What are you going to share today?</p>
         <Form onSubmit={publishLink}>
@@ -131,6 +131,7 @@ const Form = styled.form`
     border: none;
     border-radius: 5px;
     align-self: flex-end;
+    cursor: pointer;
   }
 `;
 

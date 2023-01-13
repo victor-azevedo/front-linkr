@@ -1,15 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 import axios from "axios";
 import styled from "styled-components";
-
-import { ReactComponent as UnlikeIcon } from "../../assets/HeartIcon.svg";
-import { ReactComponent as LikedIcon } from "../../assets/HeartIconFilled.svg";
-
 import { Tooltip } from "react-tooltip";
 import "../../../node_modules/react-tooltip/dist/react-tooltip.css";
 
 import { useUserData } from "../../hooks/useUserData";
+
+import { ReactComponent as UnlikeIcon } from "../../assets/HeartIcon.svg";
+import { ReactComponent as LikedIcon } from "../../assets/HeartIconFilled.svg";
 
 export default function BoxLikes({ id, likes }) {
   const { userData } = useUserData();

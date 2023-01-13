@@ -18,7 +18,7 @@ export default function MenuLogout(setIsMenuOpen) {
 }
 
 const MenuLogoutStyle = styled.div`
-  width: 120px;
+  width: 140px;
   height: 50px;
   right: 0px;
   bottom: -50px;

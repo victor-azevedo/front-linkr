@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -15,11 +16,9 @@ export default function HashtagPage() {
   }
 
   const { hashtag } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
   const [linkrs, setLinkrs] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true);
     axios
       .get(
         `${process.env.REACT_APP_BASE_URL}/hashtag/${hashtag}`,
@@ -27,13 +26,11 @@ export default function HashtagPage() {
       )
       .then((res) => {
         setLinkrs([...res.data]);
-        setIsLoading(false);
       })
       .catch((err) => {
         alert(
           "An error occurred while trying to fetch the posts, please refresh the page"
         );
-        setIsLoading(false);
       });
   }, [hashtag]);
 

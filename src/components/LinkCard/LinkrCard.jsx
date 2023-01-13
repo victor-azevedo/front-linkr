@@ -5,19 +5,19 @@ import axios from "axios";
 import styled from "styled-components";
 import { ReactTagify } from "react-tagify";
 
-import EditIcon from "../../assets/EditIcon.svg";
+import { useUserData } from "../../hooks/useUserData";
+
+import UserPicture from "../UserPicture";
 import BoxLikes from "./BoxLikes";
 import BoxIconComments from "./BoxIconComments";
 import BoxIconShares from "./BoxIconShares";
 import RemoveIcon from "../../assets/RemoveIcon.svg";
-import UserPicture from "../UserPicture";
-import AskIfWantRepost from "./AskIfWantRepost";
-
+import EditIcon from "../../assets/EditIcon.svg";
 import ModalConfirmationDelete from "../ModalConfirmationDelete";
 import LinkTextEditor from "./LinkTextEditor";
-import { useUserData } from "../../hooks/useUserData";
 import Comments from "./Comments";
 import RepostedBy from "./RepostedBy";
+import AskIfWantRepost from "./AskIfWantRepost";
 
 export default function LinkrCard({ card }) {
   const {
@@ -61,7 +61,6 @@ export default function LinkrCard({ card }) {
         setModalConfirmation(false);
         setModalLoading(false);
         window.location.reload();
-        alert("Success");
       })
       .catch((error) => {
         console.log(error);
@@ -75,20 +74,26 @@ export default function LinkrCard({ card }) {
     <ExtendedLinkrCard>
       {reposter && <RepostedBy repostedBy={reposter} />}
       {modalConfirmation && (
-          <ModalConfirmationDelete
-            modalLoading={modalLoading}
-            setModalConfirmation={setModalConfirmation}
-            handleCardRemoval={handleCardRemoval}
-          />
-        )}
-        {isSharing && (<AskIfWantRepost
-      setIsSharing={setIsSharing}
-      linkId={id}
-      setYesShare={setYesShare}
-    />)}
+        <ModalConfirmationDelete
+          modalLoading={modalLoading}
+          setModalConfirmation={setModalConfirmation}
+          handleCardRemoval={handleCardRemoval}
+        />
+      )}
+      {isSharing && (
+        <AskIfWantRepost
+          setIsSharing={setIsSharing}
+          linkId={id}
+          setYesShare={setYesShare}
+        />
+      )}
       <LinkCardStyle>
         <CardOptions>
-          <UserPicture userPictureUrl={userPictureUrl} size={"60px"} />
+          <UserPicture
+            userPictureUrl={userPictureUrl}
+            size={"60px"}
+            id={userId}
+          />
           <BoxLikes id={id} likes={likes} />
           <BoxIconComments
             id={id}
@@ -167,8 +172,7 @@ const ExtendedLinkrCard = styled.div`
   min-height: 276px;
   display: flex;
   flex-direction: column;
-
-`
+`;
 
 const LinkCardStyle = styled.div`
   width: 100%;
@@ -268,4 +272,7 @@ const EditionAndDeletion = styled.div`
   right: 0;
   width: 40px;
   height: 20px;
+  img {
+    cursor: pointer;
+  }
 `;

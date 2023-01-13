@@ -1,8 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 
 import axios from "axios";
 import styled from "styled-components";
+
 import { useUserData } from "../../hooks/useUserData";
+
+import { ENTER_KEY, ESC_KEY } from "../../constants/constants";
 
 export default function LinkTextEditor({
   setEditTextInput,
@@ -19,12 +23,10 @@ export default function LinkTextEditor({
   const inputRef = useRef(null);
 
   function handleKeyEvent(e) {
-    if (e.keyCode === 27) {
-      //ESC Key
+    if (e.keyCode === ESC_KEY) {
       setIsTextEditable(false);
     }
-    if (e.keyCode === 13) {
-      //ENTER Key
+    if (e.keyCode === ENTER_KEY) {
       if (editTextInput === text) {
         setIsTextEditable(false);
         return;
