@@ -23,12 +23,12 @@ export default function UpDatePost({ count }) {
       .get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
       .then((res) => {
         setNewPost(res.data);
-        setContNewPost(newPost[0].id);
+        setContNewPost(newPost[0]?.id);
       })
       .catch((err) => {
         console.log(err);
       });
-    setContador(newPost[0].id - count);
+    setContador(newPost[0]?.id - count);
   }, 15000);
 
   if (count >= contNewPost) return null;

@@ -61,7 +61,6 @@ export default function LinkrCard({ card }) {
         setModalConfirmation(false);
         setModalLoading(false);
         window.location.reload();
-        alert("Success");
       })
       .catch((error) => {
         console.log(error);
