@@ -7,6 +7,8 @@ import RenderCards from "../components/RenderCards";
 import Trending from "../components/Trending";
 import UserPicture from "../components/UserPicture";
 import { useUserData } from "../hooks/useUserData.jsx";
+import InfiniteScroll from "react-infinite-scroller";
+import { PAGE_LIMIT } from "../constants/constants.js";
 
 export default function UserPage(props) {
   const { userData } = useUserData();
@@ -16,44 +18,16 @@ export default function UserPage(props) {
   }
 
   const { id: userId } = useParams();
-  const [cards, setCards] = useState(null);
-  const [pageLoading, setPageLoading] = useState(false);
+  const [cards, setCards] = useState([]);
+  const [areTherePosts, setAreTherePosts] = useState(false);
+
   const [followStatus, setFollowStatus] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
 
   useEffect(() => {
-    setPageLoading(true);
-    axios
-      .get(
-        process.env.REACT_APP_BASE_URL + `/user/${userId}`,
-        userData?.requestConfig
-      )
-      .then(({ data }) => {
-        setPageLoading(false);
-        setCards(data);
-      })
-      .catch((err) => {
-        setPageLoading(false);
-        console.log(err);
-      });
-    if (!handleMyPage()) {
-      setFollowLoading(true);
-      axios
-        .get(
-          process.env.REACT_APP_BASE_URL + `/follows/${userId}`,
-          userData?.requestConfig
-        )
-        .then(({ data: isFollowing }) => {
-          setFollowStatus(isFollowing);
-          setFollowLoading(false);
-        })
-        .catch((err) => {
-          setFollowLoading(false);
-          console.log(err);
-        });
-    }
+    setAreTherePosts(true);
     //eslint-disable-next-line
-  }, [userId]);
+  }, []);
 
   function handleFollow() {
     setFollowLoading(true);
@@ -96,12 +70,44 @@ export default function UserPage(props) {
     } else return false;
   }
 
+  function loadFunc(page) {
+    axios
+      .get(
+        process.env.REACT_APP_BASE_URL + `/user/${userId}?page=${page}`,
+        userData?.requestConfig
+      )
+      .then(({ data }) => {
+        setCards([...cards, ...data]);
+        setAreTherePosts(data.length < PAGE_LIMIT ? false : true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setAreTherePosts(false);
+      });
+    if (!handleMyPage()) {
+      setFollowLoading(true);
+      axios
+        .get(
+          process.env.REACT_APP_BASE_URL + `/follows/${userId}`,
+          userData?.requestConfig
+        )
+        .then(({ data: isFollowing }) => {
+          setFollowStatus(isFollowing);
+          setFollowLoading(false);
+        })
+        .catch((err) => {
+          setFollowLoading(false);
+          console.log(err);
+        });
+    }
+  }
+
   return (
     <>
       <Header />
       <StyledUserPage>
         <div className="page-top">
-          {cards && (
+          {cards.length > 0 && (
             <>
               <div className="user-identification">
                 <UserPicture
@@ -136,11 +142,14 @@ export default function UserPage(props) {
             <Trending />
           </div>
           <div className="cards-container">
-            {pageLoading ? (
-              <h1 className="loading-screen">Loading</h1>
-            ) : (
-              cards && <RenderCards cards={cards} />
-            )}
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={loadFunc}
+              hasMore={areTherePosts}
+              loader={<Loading key={0}>Loading...</Loading>}
+            >
+              <RenderCards cards={cards} />
+            </InfiniteScroll>
           </div>
         </div>
       </StyledUserPage>
@@ -206,4 +215,13 @@ const StyledButton = styled.button`
   border: none;
   background-color: ${(props) => (props.followStatus ? "#fff" : "#1877f2")};
   color: ${(props) => (props.followStatus ? "#1877f2" : "#fff")};
+`;
+
+const Loading = styled.p`
+  font-family: "Oswald", sans-serif;
+  font-size: 28px;
+  text-align: center;
+  padding: 20px;
+  color: #fff;
+  text-align: center;
 `;
