@@ -19,7 +19,7 @@ export default function UserPage(props) {
 
   const { id: userId } = useParams();
   const [cards, setCards] = useState([]);
-  const [areTherePosts, setAreTherePosts] = useState(false);
+  const [areTherePosts, setAreTherePosts] = useState(true);
 
   const [followStatus, setFollowStatus] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
