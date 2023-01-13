@@ -19,7 +19,7 @@ export default function UserPage(props) {
 
   const { id: userId } = useParams();
   const [cards, setCards] = useState([]);
-  const [areTherePosts, setAreTherePosts] = useState(false);
+  const [areTherePosts, setAreTherePosts] = useState(true);
 
   const [followStatus, setFollowStatus] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
@@ -215,6 +215,7 @@ const StyledButton = styled.button`
   border: none;
   background-color: ${(props) => (props.followStatus ? "#fff" : "#1877f2")};
   color: ${(props) => (props.followStatus ? "#1877f2" : "#fff")};
+  cursor: pointer;
 `;
 
 const Loading = styled.p`

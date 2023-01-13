@@ -24,7 +24,7 @@ export default function LinkrCard({ card }) {
     id,
     username,
     userPictureUrl,
-    link,
+    linkUrl,
     text,
     linkMetadata,
     likes,
@@ -33,6 +33,8 @@ export default function LinkrCard({ card }) {
     repostsNumber,
     reposter,
   } = card;
+
+  console.log(card);
 
   const { userData } = useUserData();
   const [modalConfirmation, setModalConfirmation] = useState(false);
@@ -144,11 +146,11 @@ export default function LinkrCard({ card }) {
               <Text>{editTextInput}</Text>
             </ReactTagify>
           )}
-          <Link href={link} target="blank">
+          <Link href={linkUrl} target="blank">
             <LinkTexts>
               <LinkTitle>{linkMetadata?.title}</LinkTitle>
               <LinkDescription>{linkMetadata?.description}</LinkDescription>
-              <LinkUrl>{link}</LinkUrl>
+              <LinkUrl>{linkUrl}</LinkUrl>
             </LinkTexts>
             <LinkImage>
               <img src={linkMetadata?.image} alt="" />
@@ -229,6 +231,7 @@ const Link = styled.a`
   border-radius: 11px;
   margin-top: 10px;
   text-decoration: none;
+  cursor: pointer;
 `;
 
 const LinkTexts = styled.div`

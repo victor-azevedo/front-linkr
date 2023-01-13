@@ -107,11 +107,10 @@ const Container = styled.div`
   justify-content: space-between;
   height: 100vh;
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     display: initial;
     height: 100%;
-    
-}
+  }
 `;
 const SideLeft = styled.div`
   width: 100%;
@@ -138,20 +137,20 @@ const SideLeft = styled.div`
     line-height: 64px;
   }
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     height: 175px;
     align-items: center;
     padding-left: 0;
-    h1{
+    h1 {
       font-size: 76px;
       line-height: 84px;
     }
 
-    h2{
+    h2 {
       font-size: 23px;
       line-height: 34px;
     }
-}
+  }
 `;
 const SideRight = styled.div`
   background-color: #333333;
@@ -185,9 +184,8 @@ const SideRight = styled.div`
     border: none;
     margin-bottom: 13px;
 
-    @media (max-width: 600px){
-     
-     height: 55px;
+    @media (max-width: 600px) {
+      height: 55px;
     }
   }
 
@@ -203,14 +201,14 @@ const SideRight = styled.div`
     border-radius: 6px;
     border: none;
     margin-bottom: 14px;
+    cursor: pointer;
 
-    @media (max-width: 600px){
-      
+    @media (max-width: 600px) {
       height: 55px;
     }
   }
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     height: 100vh;
     flex-direction: initial;
     padding-top: 40px;
@@ -219,4 +217,3 @@ const SideRight = styled.div`
     padding-right: 0;
   }
 `;
-

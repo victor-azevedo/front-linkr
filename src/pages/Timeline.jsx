@@ -24,7 +24,6 @@ export default function Timeline(props) {
   const [areTherePosts, setAreTherePosts] = useState(false);
   const [linksList, setLinksList] = useState([]);
   const { setFollowersList } = useFollowing();
-  const [count, setCount] = useState(0);
   if (!userData) {
     navigate("/");
   }
@@ -50,7 +49,6 @@ export default function Timeline(props) {
       )
       .then((res) => {
         setLinksList([...linksList, ...res.data]);
-        setCount(res.data[0]?.id);
         setAreTherePosts(res.data.length < PAGE_LIMIT ? false : true);
       })
       .catch((err) => {
@@ -69,7 +67,7 @@ export default function Timeline(props) {
           <h2>timeline</h2>
           <Cards>
             <PostLinkr userPictureUrl={userData?.pictureUrl} />
-            <UpDatePost count={count} />
+            <UpDatePost lastPostId={linksList[0]?.id} />
             <InfiniteScroll
               pageStart={0}
               loadMore={loadFunc}

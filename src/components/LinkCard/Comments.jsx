@@ -146,6 +146,7 @@ const BoxInput = styled.form`
     font-size: 14px;
     line-height: 17px;
     padding: 0 10px;
+    padding-right: 40px;
     margin-left: 10px;
     color: #575757;
     font-style: italic;
