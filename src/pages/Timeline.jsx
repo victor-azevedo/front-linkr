@@ -23,7 +23,7 @@ export default function Timeline(props) {
 
   const [areTherePosts, setAreTherePosts] = useState(false);
   const [linksList, setLinksList] = useState([]);
-  const { followersList, setFollowersList } = useFollowing();
+  const { setFollowersList } = useFollowing();
   const [count, setCount] = useState(0);
   if (!userData) {
     navigate("/");
@@ -43,8 +43,6 @@ export default function Timeline(props) {
   }, []);
 
   function loadFunc(page) {
-    console.log(page);
-    setAreTherePosts(false);
     axios
       .get(
         `${process.env.REACT_APP_BASE_URL}/linkrs?page=${page}`,
