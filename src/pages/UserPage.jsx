@@ -215,6 +215,7 @@ const StyledButton = styled.button`
   border: none;
   background-color: ${(props) => (props.followStatus ? "#fff" : "#1877f2")};
   color: ${(props) => (props.followStatus ? "#1877f2" : "#fff")};
+  cursor: pointer;
 `;
 
 const Loading = styled.p`
