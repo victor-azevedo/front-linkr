@@ -51,8 +51,7 @@ const AskText = styled.p`
   height: 70px;
   left: 565px;
   top: 406px;
-
-  font-family: "Lato";
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 29px;
@@ -79,8 +78,7 @@ const ButtonYes = styled.button`
 
   background: #1877f2;
   border-radius: 5px;
-
-  font-family: "Lato";
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -99,7 +97,7 @@ const ButtonNo = styled.button`
   top: 498px;
   background: #ffffff;
   border-radius: 5px;
-  font-family: "Lato";
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 18px;

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
+
 import UserPicture from "./UserPicture";
 
 export default function Suggestion({ profileUrl, username, id, isFollowing }) {
@@ -21,6 +23,7 @@ const StyledSuggestion = styled.div`
   align-items: center;
   box-sizing: content-box;
   padding: 10px;
+  cursor: pointer;
   p {
     color: black;
     margin-left: 10px;

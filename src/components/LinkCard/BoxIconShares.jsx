@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
+
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import axios from "axios";
+
 import { useUserData } from "../../hooks/useUserData";
+
 import { ReactComponent as ShareIcon } from "../../assets/ShareIcon.svg";
 
 export default function BoxIconShares({
@@ -35,7 +39,6 @@ export default function BoxIconShares({
       });
       setIsSharing(false);
       setYesShare(false);
-      
     } else {
     }
   }, [yesShare]);

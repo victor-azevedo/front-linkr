@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import axios from "axios";
 import { ReactTagify } from "react-tagify";
@@ -6,24 +7,21 @@ import { useEffect, useState } from "react";
 import { useUserData } from "../hooks/useUserData";
 import { useNavigate } from "react-router-dom";
 
-export default function Trending(props) {
-  //requisição backend
+export default function Trending() {
   const [trending, setTrending] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const { userData } = useUserData();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoading(true);
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/hashtag`, userData.requestConfig)
       .then((res) => {
         setTrending(res.data);
-        setIsLoading(false);
       })
       .catch((err) => {
-        // alert("An error occurred while trying to fetch the posts, please refresh the page");
-        setIsLoading(false);
+        alert(
+          "An error occurred while trying to fetch the hashtags, please refresh the page"
+        );
       });
   }, []);
 
@@ -75,7 +73,7 @@ const TrendingLine = styled.div`
   margin-bottom: 22px;
 `;
 const TrendingHashtags = styled.div`
-  font-family: Lato;
+  font-family: "Lato", sans-serif;
   font-size: 19px;
   font-weight: 700;
   line-height: 23px;

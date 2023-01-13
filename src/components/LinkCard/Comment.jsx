@@ -51,7 +51,7 @@ const CommentStyle = styled.div`
 `;
 
 const AuthorComment = styled.span`
-  font-family: "Lato";
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -60,7 +60,7 @@ const AuthorComment = styled.span`
 `;
 
 const FollowingComment = styled(AuthorComment)`
-  font-family: "Lato";
+font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -69,7 +69,7 @@ const FollowingComment = styled(AuthorComment)`
 `;
 
 const CommenterName = styled.span`
-  font-family: "Lato";
+font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -78,7 +78,7 @@ const CommenterName = styled.span`
 `;
 
 const CommentText = styled.p`
-  font-family: "Lato";
+font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
