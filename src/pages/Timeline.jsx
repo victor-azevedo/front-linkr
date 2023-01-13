@@ -12,6 +12,8 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useUserData } from "../hooks/useUserData";
 import { useFollowing } from "../hooks/useFollowing";
 
+import { PAGE_LIMIT } from "../constants/constants";
+
 export default function Timeline(props) {
   const { userData } = useUserData();
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export default function Timeline(props) {
     navigate("/");
   }
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [areTherePosts, setAreTherePosts] = useState(false);
   const [linksList, setLinksList] = useState([]);
   const { followersList, setFollowersList } = useFollowing();
   const [count, setCount] = useState(0);
@@ -28,26 +30,11 @@ export default function Timeline(props) {
   }
 
   useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/linkrs`, userData?.requestConfig)
-      .then((res) => {
-        setLinksList(res.data);
-        setCount(res.data[0]?.id);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        alert(
-          "An error occurred while trying to fetch the posts, please refresh the page"
-        );
-        setIsLoading(false);
-        navigate("/");
-      });
-
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/follows`, userData?.requestConfig)
       .then((res) => {
         setFollowersList(res.data);
+        setAreTherePosts(true);
       })
       .catch((err) => {
         console.log(err);
@@ -55,8 +42,25 @@ export default function Timeline(props) {
     //eslint-disable-next-line
   }, []);
 
-  function loadFunc(params) {
-    console.log(params);
+  function loadFunc(page) {
+    console.log(page);
+    setAreTherePosts(false);
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/linkrs?page=${page}`,
+        userData?.requestConfig
+      )
+      .then((res) => {
+        setLinksList([...linksList, ...res.data]);
+        setCount(res.data[0]?.id);
+        setAreTherePosts(res.data.length < PAGE_LIMIT ? false : true);
+      })
+      .catch((err) => {
+        alert(
+          "An error occurred while trying to fetch the posts, please refresh the page"
+        );
+        setAreTherePosts(false);
+      });
   }
 
   return (
@@ -71,12 +75,11 @@ export default function Timeline(props) {
             <InfiniteScroll
               pageStart={0}
               loadMore={loadFunc}
-              hasMore={false}
-              loader={<Loading>Loading...</Loading>}
+              hasMore={areTherePosts}
+              loader={<Loading key={0}>Loading...</Loading>}
             >
               <RenderCards cards={linksList} />
             </InfiniteScroll>
-            {/* {isLoading ? <Loading>Loading...</Loading> : null} */}
           </Cards>
         </TimelineStyle>
         <div className="trending-hashtags">
@@ -127,4 +130,5 @@ const Loading = styled.p`
   font-size: 28px;
   text-align: center;
   padding: 20px;
+  text-align: center;
 `;
