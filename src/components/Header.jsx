@@ -151,6 +151,9 @@ const SearchBar = styled.div`
     background-color: #e7e7e7;
     border-radius: 8px;
   }
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const BoxMenu = styled.div`
