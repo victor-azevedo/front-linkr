@@ -6,6 +6,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { useUserData } from "../hooks/useUserData";
+import LoadingDots from "../components/LoadingDots";
 
 export default function SignIn(props) {
   const navigate = useNavigate();
@@ -58,6 +59,10 @@ export default function SignIn(props) {
     });
   }
 
+  const renderButtonLabel = function () {
+    return isLoading ? <LoadingDots /> : "Log In";
+  };
+
   return (
     <Container>
       <SideLeft>
@@ -69,7 +74,7 @@ export default function SignIn(props) {
       </SideLeft>
 
       <SideRight>
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} isLoading={isLoading}>
           <input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -91,10 +96,10 @@ export default function SignIn(props) {
           ></input>
 
           <button type="submit" disabled={isLoading}>
-            Log in
+            {renderButtonLabel()}
           </button>
           <Link to="/sign-up">First time? Create an account!</Link>
-        </form>
+        </Form>
       </SideRight>
     </Container>
   );
@@ -110,6 +115,7 @@ const Container = styled.div`
     flex-direction: column;
   }
 `;
+
 const SideLeft = styled.div`
   width: 60%;
   height: 100%;
@@ -151,7 +157,6 @@ const SideLeft = styled.div`
       line-height: 42px;
     }
   }
-
   @media (max-width: 600px) {
     width: 100%;
     height: 40%;
@@ -180,6 +185,7 @@ const SideLeft = styled.div`
     }
   }
 `;
+
 const SideRight = styled.div`
   width: 40%;
   height: 100%;
@@ -190,23 +196,34 @@ const SideRight = styled.div`
 
   padding: 0 5%;
 
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    a {
-      color: white;
-      font-family: "Lato", sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 20px;
-      line-height: 24px;
-      text-decoration-line: underline;
-      text-align: center;
-    }
+  @media (max-width: 840px) {
+    width: 45%;
+    padding: 0 2.5%;
   }
+  @media (max-width: 600px) {
+    width: 100%;
+    flex-grow: 2;
+    padding: 20px 10%;
+  }
+`;
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  opacity: ${(props) => props.isLoading && "0.25"};
+  transition: opacity 0.2s;
+  a {
+    color: white;
+    font-family: "Lato", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    text-align: center;
+  }
   input {
     width: 100%;
     height: 65px;
@@ -214,7 +231,6 @@ const SideRight = styled.div`
     border: none;
     margin-bottom: 13px;
   }
-
   button {
     color: white;
     width: 100%;
@@ -229,29 +245,10 @@ const SideRight = styled.div`
     margin-bottom: 14px;
   }
 
-  @media (max-width: 840px) {
-    width: 45%;
-    padding: 0 2.5%;
-    h1 {
-      font-size: 86px;
-      line-height: 92px;
-    }
-
-    h2 {
-      font-size: 32px;
-      line-height: 42px;
-    }
-  }
-
   @media (max-width: 600px) {
-    width: 100%;
-    flex-grow: 2;
-    padding: 20px 10%;
-    form {
-      a {
-        font-size: 16px;
-        line-height: 20px;
-      }
+    a {
+      font-size: 16px;
+      line-height: 20px;
     }
 
     input {
