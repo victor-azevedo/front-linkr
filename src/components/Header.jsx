@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { useUserData } from "../hooks/useUserData";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 import UserPicture from "./UserPicture";
 import SearchBar from "./SearchBar";
@@ -16,6 +17,7 @@ import { ReactComponent as CloseMenuIcon } from "../assets/CloseMenuIcon.svg";
 export default function Header() {
   const { userData } = useUserData();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { width } = useWindowDimensions();
 
   const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ export default function Header() {
   return (
     <HeaderStyle>
       <Logo onClick={() => navigate("/timeline")}>linkr</Logo>
-      <SearchBar />
+      {width > 600 && <SearchBar />}
       <BoxMenu onClick={showHideMenu}>
         {isMenuOpen ? <StyledCloseMenuIcon /> : <StyledOpenMenuIcon />}
         <UserPicture userPictureUrl={userData?.pictureUrl} size={"55px"} />
