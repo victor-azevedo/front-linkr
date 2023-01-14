@@ -5,8 +5,8 @@ export default function LoadingDots() {
   return (
     <ContainerLoading>
       <ThreeDots
-        height="60"
-        width="60"
+        height="48"
+        width="48"
         radius="7"
         color="#FFF"
         ariaLabel="three-dots-loading"

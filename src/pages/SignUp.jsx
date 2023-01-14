@@ -209,8 +209,9 @@ const SideRight = styled.div`
   }
   @media (max-width: 600px) {
     width: 100%;
+    align-items: flex-start;
     flex-grow: 2;
-    padding: 20px 10%;
+    padding: 50px 10%;
   }
 `;
 
